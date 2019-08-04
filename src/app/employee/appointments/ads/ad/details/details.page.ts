@@ -41,15 +41,31 @@ export class DetailsPage implements OnInit {
 
   getAds() {
     this.AdData = JSON.parse(localStorage.getItem('data'));
-    console.log('detail', this.AdData);
-    // if ad comes from template 3
-    if (this.AdData.step2) {
-      if (this.step2.wageType === 'DAILY') {
+    // console.log('detail', this.AdData);
+    if (this.AdData.matchingQualification.qualification) {
+      console.log('if working');
+      this.qualification = this.AdData.matchingQualification.qualification;
+    } else {
+      console.log('else working');
+      this.qualification = this.AdData.qualification;
+
+    }
+
+    if (this.AdData.matchingQualification.wageType) {
+      if (this.AdData.matchingQualification.wageType === 'DAILY') {
         this.feeType = 'Tag';
       } else {
         this.feeType = 'Stunde';
       }
+    } else {
+      if (this.AdData.wageType === 'DAILY') {
+        this.feeType = 'Tag';
+      } else {
+        this.feeType = 'Stunde';
+      }
+    }
 
+    if (this.AdData.step2) {
       if (this.step2.drivingLicence === 'B') {
         this.license = 'B';
       } else if (this.step2.drivingLicence === 'B1') {
@@ -60,8 +76,6 @@ export class DetailsPage implements OnInit {
         this.license = 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
       }
     } else { // if ad come from template 1 & 2
-
-      this.qualification = this.AdData.qualification;
       if (this.AdData.wageType === 'DAILY') {
         this.feeType = 'Tag';
       } else {
@@ -100,6 +114,7 @@ export class DetailsPage implements OnInit {
     this.AdData.apply.push(
       {
         uid: localStorage.getItem('uid'),
+        // tslint:disable-next-line: max-line-length
         applyFor: this.AdData.matchingQualification.qualification ? this.AdData.matchingQualification.qualification : this.AdData.matchingQualification,
         name: this.employeeName
       }
@@ -156,7 +171,7 @@ export class DetailsPage implements OnInit {
     toast.present();
   }
 
-  getLisence(val){
+  getLisence(val) {
     if (val === 'B') {
       return 'B';
     } else if (val === 'B1') {
@@ -165,7 +180,7 @@ export class DetailsPage implements OnInit {
       return 'Es wird kein Führerschein benötigt.';
     } else {
       return 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
-  }
+    }
   }
 }
 

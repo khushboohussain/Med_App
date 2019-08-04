@@ -34,7 +34,7 @@ export class AdPage implements OnInit {
 
   getAds() {
     this.AdData = JSON.parse(localStorage.getItem('data'));
-    console.log(this.AdData);
+    // console.log(this.AdData);
     if (this.AdData.startDate === this.AdData.endDate) {
       this.endStartDate = this.AdData.startDate;
     } else {

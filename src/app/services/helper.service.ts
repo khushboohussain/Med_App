@@ -108,7 +108,7 @@ export class HelperService {
     // }, options);
     const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.post('http://localhost:3000/sendemail/', {
-      email: email
+      email
     }, options);
 
   }
@@ -140,12 +140,12 @@ export class HelperService {
         if (this.step2[index].drivingLicence === 'BENEFICIAL' || this.step2[index].drivingLicence === 'NO') {
           // tslint:disable-next-line: radix
           if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.step2[index].qualification) > -1) {
-            return { matchingQualification: { index: index, ...result.step2[index] }, ...result };
+            return { matchingQualification: { index, ...result.step2[index] }, ...result };
           }
         } else {
           // tslint:disable-next-line: radix max-line-length
           if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.step2[index].qualification) > -1 && this.step2[index].drivingLicence === this.getEmployeedata.führerscheinklasse) {
-            return { matchingQualification: { index: index, ...result.step2[index] }, ...result };
+            return { matchingQualification: { index, ...result.step2[index] }, ...result };
           }
         }
         // Testing Other Qualifications of Template 3
@@ -155,12 +155,12 @@ export class HelperService {
             if (this.step2[index].otherQualification[xc].drivingLicence === 'BENEFICIAL' || this.step2[index].otherQualification[xc].drivingLicence === 'NO') {
               // tslint:disable-next-line: radix max-line-length
               if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(this.step2[index].otherQualification[xc].qualification) > -1) {
-                return { matchingQualification: { index: index, ...result.step2[index].otherQualification[xc] }, ...result };
+                return { matchingQualification: { index, ...result.step2[index].otherQualification[xc] }, ...result };
               }
             } else {
               // tslint:disable-next-line: radix max-line-length
               if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(this.step2[index].otherQualification[xc].qualification) > -1 && this.step2[index].otherQualification[xc].drivingLicence === this.getEmployeedata.führerscheinklasse) {
-                return { matchingQualification: { index: index, ...result.step2[index].otherQualification[xc] }, ...result };
+                return { matchingQualification: { index, ...result.step2[index].otherQualification[xc] }, ...result };
               }
 
             }
@@ -172,6 +172,7 @@ export class HelperService {
 
       // Testing other data or other Qualification
       if (result.otherQualification.length > 0) {
+        // tslint:disable-next-line: prefer-for-of
         for (let index = 0; index < result.otherQualification.length; index++) {
           // tslint:disable-next-line: max-line-length
           if (result.otherQualification[index].drivingLicence === 'BENEFICIAL' || result.otherQualification[index].drivingLicence === 'NO') {
@@ -179,28 +180,27 @@ export class HelperService {
             // console.log(distance);
             // console.log(parseInt(this.getEmployeedata.Einsatzradius));
             // console.log( x.indexOf(result.otherQualification[index].qualification));
+            // tslint:disable-next-line: radix max-line-length
             if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.otherQualification[index].qualification) > -1) {
 
               return { matchingQualification: result.otherQualification[index], ...result };
-            }
-            else if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.qualification) > -1) {
+            // tslint:disable-next-line: radix
+            } else if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.qualification) > -1) {
               return { matchingQualification: result.qualification, ...result };
             }
           } else {
             // tslint:disable-next-line: radix max-line-length
             if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.otherQualification[index].qualification) > -1 && result.otherQualification[index].drivingLicence === this.getEmployeedata.führerscheinklasse) {
               return { matchingQualification: result.otherQualification[index], ...result };
-            }
-
-            else if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.qualification) > -1 && result.drivingLicence === this.getEmployeedata.führerscheinklasse) {
+            // tslint:disable-next-line: radix max-line-length
+            } else if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.qualification) > -1 && result.drivingLicence === this.getEmployeedata.führerscheinklasse) {
               return { matchingQualification: result.qualification, ...result };
             }
 
           }
 
         }
-      }
-      else {
+      } else {
         if (result.drivingLicence === 'BENEFICIAL' || result.drivingLicence === 'NO') {
           // tslint:disable-next-line: radix otherQualification
           if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.qualification) > -1) {

@@ -61,17 +61,12 @@
                 <p>{{data.qualification}}/{{data.requiredEmployees}} - {{licenseTypes[0]}} -
                   {{data.wage}}€/{{formatType[0]}}
                 </p>
-                <!-- 123 {{licenseType}} -->
               </div>
-            </div>
-          </div>
-          <!-- end of personal qualification -->
-          <!-- Other Qualificatioss  -->
-          <div class="who" *ngIf="data.otherQualification.length > 0">
-            <p class="small-title container">Wer?</p>
-            <div class="list-items">
-              <div class="item-no-icon container" *ngFor="let list of data.otherQualification; let i = index ">
-                <p>{{list.qualification}}/{{list.requiredEmployees}} - {{licenseTypes[i + 1]}} -
+              <!-- end of personal qualification -->
+              <!-- Other Qualificatioss  -->
+              <div class="item-no-icon container" *ngIf="data.otherQualification.length > 0">
+                <p *ngFor="let list of data.otherQualification; let i = index">
+                  {{list.qualification}}/{{list.requiredEmployees}} - {{licenseTypes[i + 1]}} -
                   {{list.wage}}€/{{formatType[i + 1]}}
                 </p>
               </div>
@@ -104,23 +99,17 @@
                   {{data.wage}}€/{{formatType[0]}}
                 </p>
               </div>
-            </div>
-          </div>
-          <!-- end of personal qualification -->
-          <!-- Other Qualificatioss  -->
-          <div class="who" *ngIf="data.otherQualification.length > 0">
-            <p class="small-title container">Wer?</p>
-            <div class="list-items">
-              <div class="item-no-icon container" *ngFor="let list of data.otherQualification; let i = index ">
-                <p>{{list.qualification}}/{{list.requiredEmployees}} - {{licenseTypes[i + 1]}} -
+              <!-- end of personal qualification -->
+              <!-- Other Qualificatioss  -->
+              <div class="item-no-icon container" *ngIf="data.otherQualification.length > 0">
+                <p *ngFor="let list of data.otherQualification; let i = index ">
+                  {{list.qualification}}/{{list.requiredEmployees}} - {{licenseTypes[i + 1]}} -
                   {{list.wage}}€/{{formatType[i + 1]}}
                 </p>
-                <!-- {{licenseTypes[i + 1]}} -->
               </div>
             </div>
           </div>
         </div>
-
         <!-- show if the ad is set as different dates and continuous is not selected-->
         <div *ngIf="option3" class="different-dates">
           <div class="when-who">
@@ -140,7 +129,6 @@
               <!-- other Qualifications -->
               <div class="item-no-icon container" *ngIf="item.otherQualification.length > 0">
                 <p *ngFor="let x of item.otherQualification let y = index">
-                  other Qualification's Data:=
                   {{x.qualification}}/{{x.requiredEmployees }} -
                   {{ otherlicenceType[y + i] }} -
                   {{x.wage }}€/{{otherFormatType[y + i] }}

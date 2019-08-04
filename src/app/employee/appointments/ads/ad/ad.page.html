@@ -12,13 +12,16 @@
       </div>
 
       <div class="ad-info">
-        <div class="who" >
+        <div class="who">
           <p class="small-title container">Gesucht werden</p>
           <div class="list-items">
             <!-- show all personal qualification which are searched for -->
             <div class="item pointer" (click)="navigateAdDetails()">
               <div class="item-text text container">
-                <p>{{(AdData?.matchingQualification?.qualification) ? AdData?.matchingQualification?.qualification : AdData?.matchingQualification?.qualification }}</p>
+                <!-- <p>{{(AdData?.matchingQualification?.qualification) ? AdData?.matchingQualification?.qualification : AdData?.matchingQualification?.qualification }}</p> -->
+                <p>
+                  {{(AdData?.matchingQualification?.qualification) ? AdData?.matchingQualification?.qualification : AdData?.matchingQualification }}
+                </p>
               </div>
               <div class="item-icon">
                 <ion-icon name="arrow-forward"></ion-icon>
@@ -113,7 +116,8 @@
               </div> -->
               <div class="item-no-icon container">
                 <!-- FORMAT: Am "FIRST DATE" um "START TIME" Uhr bis zum "LAST DATE" um "END TIME" Uhr -->
-                <p>Am {{endStartDate}} zwischen {{AdData?.matchingQualification?.startTime}} - {{AdData?.matchingQualification?.endTime}} Uhr
+                <p>Am {{endStartDate}} zwischen {{AdData?.matchingQualification?.startTime}} -
+                  {{AdData?.matchingQualification?.endTime}} Uhr
                 </p>
               </div>
             </div>

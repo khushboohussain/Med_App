@@ -32,11 +32,11 @@ export class AdsPage implements OnInit {
     let x = [];
     this.api.getPersonalQualification().subscribe((res: any) => {
       this.qualification = res.data;
-      console.log('own qualification', localStorage.getItem('qualifikation'));
+      // console.log('own qualification', localStorage.getItem('qualifikation'));
       this.qualification.forEach((a, i) => {
         if (a.toLowerCase() === localStorage.getItem('qualifikation').toLowerCase()) {
           x = this.qualification.slice(i , this.qualification.length);
-          console.log(x);
+          // console.log(x);
           return;
         }
       });
@@ -55,7 +55,7 @@ export class AdsPage implements OnInit {
 
 
   navigateAd(item) {
-    console.log(item);
+    // console.log(item);
     localStorage.setItem('data', JSON.stringify(item));
     this.navController.navigateForward('employee/appointments/ads/ad');
   }
@@ -80,7 +80,7 @@ export class AdsPage implements OnInit {
           return this.helper.filterAds(data, this.getEmployeedata, this.step2, x);
         });
     });
-    console.log('simpel QualData', this.simpleQualData);
+    // console.log('simpel QualData', this.simpleQualData);
 
   }
 

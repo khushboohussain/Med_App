@@ -1,0 +1,509 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <!-- show if dates same (option 1) is clicked and continuous checkbox is not selected -->
+      <div *ngIf="option1;" class="dates-same">
+        <form [formGroup]="form">
+          <div class="title container">
+            <h2>Einsatz Template 1</h2>
+          </div>
+
+          <div class="ad-time">
+            <ion-list>
+              <div class="grid-2">
+                <!-- start time -->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Startzeit</ion-label>
+                  <ion-datetime displayFormat="HH:mm" formControlName="startTime" cancelText="Abbrechen"
+                    doneText="Fertig"></ion-datetime>
+                </ion-item>
+
+                <!-- end time -->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Endzeit</ion-label>
+                  <ion-datetime formControlName="endTime" displayFormat="HH:mm" cancelText="Abbrechen"
+                    doneText="Fertig"></ion-datetime>
+                </ion-item>
+              </div>
+            </ion-list>
+          </div>
+
+          <div class="employee-info">
+            <div class="employee">
+              <div class="title container">
+                <h3>Einsatzkraft</h3>
+              </div>
+
+              <ion-list>
+                <div class="grid-2-l">
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Einsatzkraft</ion-label>
+                    <ion-select formControlName="qualification" cancelText="Abbrechen" okText="Fertig">
+                      <ion-select-option *ngFor="let item of adQualifications" [value]='item'>{{item}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+
+                  <!-- how many of those employees -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Anzahl</ion-label>
+                    <ion-input formControlName="requiredEmployees" type="number" clearInput></ion-input>
+                  </ion-item>
+                </div>
+
+                <!-- wage -->
+                <div class="grid-2-l">
+                  <!-- money -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Honorar in €</ion-label>
+                    <ion-input type="number" formControlName="wage" clearInput></ion-input>
+                  </ion-item>
+
+                  <!-- money per day or per hour paid -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Tag/Std.</ion-label>
+                    <ion-select formControlName="wageType" cancelText="Abbrechen" okText="Fertig">
+                      <ion-select-option value="HOURLY">pro Stunde</ion-select-option>
+                      <ion-select-option value="DAILY">pro Tag</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+
+                <!-- driving license -->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Führerschein benötigt?</ion-label>
+                  <ion-select formControlName="drivingLicence" cancelText="Abbrechen" okText="Fertig">
+                    <ion-select-option value="NO">Kein Führerschein</ion-select-option>
+                    <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
+                    <ion-select-option value="B">B</ion-select-option>
+                    <ion-select-option value="BE">BE</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </div>
+
+            <div class="additional-employee" *ngFor="let item of newField; let i = index ">
+              <div class="title container">
+                <h3>Einsatzkraft <ion-icon name="close-circle" title="Remove newly created fields"
+                    (click)="removeFieldx(i)"></ion-icon>
+                </h3>
+              </div>
+
+              <ion-list>
+                <div class="grid-2-l">
+                  <!--adding new personal qualification -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Einsatzkraft</ion-label>
+                    <ion-select #otherQualification [(ngModel)]="item.otherQualification"
+                      [ngModelOptions]="{standalone: true}" cancelText="Abbrechen" okText="Fertig"
+                      (ionChange)='gettingModelValues(item)'>
+                      <ion-select-option *ngFor="let data of adQualifications" [value]='data'>{{data}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <!-- how many of those employees -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Anzahl</ion-label>
+                    <ion-input type="number" #otherRequiredEmp [(ngModel)]="item.otherRequiredEmp"
+                      [ngModelOptions]="{standalone: true}" clearInput (ionChange)='gettingModelValues(item)'>
+                    </ion-input>
+                  </ion-item>
+                </div>
+
+                <!-- wage -->
+                <div class="grid-2-l">
+                  <!-- money -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Honorar in €</ion-label>
+                    <ion-input type="number" #wage [(ngModel)]="item.wage" [ngModelOptions]="{standalone: true}"
+                      clearInput (ionChange)='gettingModelValues(item)'>
+                    </ion-input>
+                  </ion-item>
+
+                  <!-- money per day or per hour paid -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Tag/Std.</ion-label>
+                    <ion-select #wageType [(ngModel)]="item.wageType" [ngModelOptions]="{standalone: true}"
+                      cancelText="Abbrechen" okText="Fertig" (ionChange)='gettingModelValues(item)'>
+                      <ion-select-option value="HOURLY">pro Stunde</ion-select-option>
+                      <ion-select-option value="DAILY">pro Tag</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+
+                <!-- driving license -->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Führerschein benötigt?</ion-label>
+                  <ion-select #drivingLicence [(ngModel)]="item.drivingLicence" [ngModelOptions]="{standalone: true}"
+                    cancelText="Abbrechen" okText="Fertig" (ionChange)='gettingModelValues(item)'>
+                    <ion-select-option value="NO">Kein Führerschein</ion-select-option>
+                    <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
+                    <ion-select-option value="B">B</ion-select-option>
+                    <ion-select-option value="BE">BE</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+
+          <!-- create another "employee-info" just below the first one, the newly created one should have a remove icon so we can delete it if added by mistake -->
+          <div class="add-new container pointer" (click)="addFieldx()">
+            <ion-icon name="add"></ion-icon>
+            <p>Weitere Einsatzkraft hinzufügen</p>
+          </div>
+
+          <!-- create ad -->
+          <div class="container">
+            <div class="divider"></div>
+            <ion-button color="primary" expand="block" [disabled]="!form.valid || form.pristine || empty"
+              (click)="submitForm(form)">Jetzt Stelle erstellen</ion-button>
+          </div>
+        </form>
+      </div>
+
+      <!-- show if dates same (Option 1) is clicked and continuous checkbox is selected -->
+      <div *ngIf="option2;" class="dates-same-continuous">
+        <form [formGroup]="form">
+          <div class="title container">
+            <h2>Einsatz Template 2</h2>
+          </div>
+
+          <div class="ad-date">
+            <ion-list>
+              <div class="grid-2">
+                <!-- start time start date-->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Startzeit {{data.startDate}}</ion-label>
+                  <ion-datetime formControlName="startTime" displayFormat="HH:mm" cancelText="Abbrechen"
+                    doneText="Fertig"></ion-datetime>
+                </ion-item>
+
+                <!-- end time end date-->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Endzeit {{data.endDate}}</ion-label>
+                  <ion-datetime formControlName="endTime" displayFormat="HH:mm" cancelText="Abbrechen"
+                    doneText="Fertig"></ion-datetime>
+                </ion-item>
+              </div>
+            </ion-list>
+          </div>
+
+          <div class="employee-info">
+            <div class="employee">
+              <div class="title container">
+                <h3>Einsatzkraft</h3>
+              </div>
+
+              <ion-list>
+                <div class="grid-2-l">
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Einsatzkraft</ion-label>
+                    <ion-select formControlName="qualification" cancelText="Abbrechen" okText="Fertig">
+                      <ion-select-option *ngFor="let item of adQualifications" [value]='item'>{{item}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+
+                  <!-- how many of those employees -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Anzahl</ion-label>
+                    <ion-input formControlName="requiredEmployees" type="number" clearInput></ion-input>
+                  </ion-item>
+                </div>
+
+                <!-- wage -->
+                <div class="grid-2-l">
+                  <!-- money -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Honorar in €</ion-label>
+                    <ion-input type="number" formControlName="wage" clearInput></ion-input>
+                  </ion-item>
+
+                  <!-- money per day or per hour paid -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Tag/Std.</ion-label>
+                    <ion-select formControlName="wageType" cancelText="Abbrechen" okText="Fertig">
+                      <ion-select-option value="HOURLY">pro Stunde</ion-select-option>
+                      <ion-select-option value="DAILY">pro Tag</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+
+                <!-- driving license -->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Führerschein benötigt?</ion-label>
+                  <ion-select formControlName="drivingLicence" cancelText="Abbrechen" okText="Fertig">
+                    <ion-select-option value="NO">Kein Führerschein</ion-select-option>
+                    <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
+                    <ion-select-option value="B">B</ion-select-option>
+                    <ion-select-option value="BE">BE</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </div>
+
+            <div class="additional-employee" *ngFor="let item of newField; let i = index ">
+              <div class="title container">
+                <h3>Einsatzkraft <ion-icon name="close-circle" title="Remove newly created fields"
+                    (click)="removeFieldx(i)"></ion-icon>
+                </h3>
+              </div>
+
+              <ion-list>
+                <div class="grid-2-l">
+                  <!-- Adding new personal qualification -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Einsatzkraft</ion-label>
+                    <ion-select [(ngModel)]="item.otherQualification" [ngModelOptions]="{standalone: true}"
+                      cancelText="Abbrechen" okText="Fertig" (ionChange)='gettingModelValues(item)'>
+                      <ion-select-option *ngFor="let item of adQualifications" [value]='item'>{{item}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <!-- how many of those employees -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Anzahl</ion-label>
+                    <ion-input type="number" [(ngModel)]="item.otherRequiredEmp" [ngModelOptions]="{standalone: true}"
+                      clearInput (ionChange)='gettingModelValues(item)'></ion-input>
+                  </ion-item>
+                </div>
+
+                <!-- wage -->
+                <div class="grid-2-l">
+                  <!-- money -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Honorar in €</ion-label>
+                    <ion-input type="number" [(ngModel)]="item.wage" [ngModelOptions]="{standalone: true}" clearInput
+                      (ionChange)='gettingModelValues(item)'>
+                    </ion-input>
+                  </ion-item>
+
+                  <!-- money per day or per hour paid -->
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Tag/Std.</ion-label>
+                    <ion-select [(ngModel)]="item.wageType" [ngModelOptions]="{standalone: true}" cancelText="Abbrechen"
+                      okText="Fertig" (ionChange)='gettingModelValues(item)'>
+                      <ion-select-option value="HOURLY">pro Stunde</ion-select-option>
+                      <ion-select-option value="DAILY">pro Tag</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+
+                <!-- driving license -->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Führerschein benötigt?</ion-label>
+                  <ion-select [(ngModel)]="item.drivingLicence" [ngModelOptions]="{standalone: true}"
+                    cancelText="Abbrechen" okText="Fertig" (ionChange)='gettingModelValues(item)'>
+                    <ion-select-option value="NO">Kein Führerschein</ion-select-option>
+                    <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
+                    <ion-select-option value="B">B</ion-select-option>
+                    <ion-select-option value="BE">BE</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
+
+          <!-- create another "employee-info" just below the first one, the newly created one should have a remove icon so we can delete it if added by mistake -->
+          <div class="add-new container pointer" (click)="addFieldx()">
+            <ion-icon name="add"></ion-icon>
+            <p>Weitere Einsatzkraft hinzufügen</p>
+          </div>
+
+          <!-- create ad -->
+          <div class="container">
+            <div class="divider"></div>
+            <ion-button color="primary" expand="block" [disabled]="form.invalid || form.pristine || empty"
+              (click)="submitForm(form)">Jetzt Stelle erstellen</ion-button>
+          </div>
+        </form>
+      </div>
+
+      <!-- show if dates different (Option 2) is clicked and continuous checkbox is not selected -->
+      <div *ngIf="option3" class="dates-different">
+        <ion-slides #slides>
+          <!-- show for each date an own form/slide; in last slide the submit button will be to confirm, else it should just go to the next slide -->
+          <ion-slide *ngFor="let item of form2; let i = index;">
+            <form [formGroup]="form2[i]">
+              <div class="title container">
+                <h2>Einsatz Template 3</h2>
+                <!-- get data from last slide, if first slide then don't show -->
+                <div class="add-new" *ngIf="i > 0" (click)="getValues(form2, i)">
+                  <ion-icon name="add"></ion-icon>
+                  <p>Voherige Daten übernehmen</p>
+                </div>
+
+                <div *ngIf="i > 0" (click)="goBack()">
+                  <ion-button name="arrow-back" color="primary" expand="block">Zurück</ion-button>
+                </div>
+              </div>
+
+              <div class="ad-date">
+                <ion-list>
+                  <div class="grid-2">
+                    <!-- start time -->
+                    <ion-item lines="none">
+                      <ion-label position="stacked">Startzeit</ion-label>
+                      <ion-datetime formControlName="startTime" displayFormat="HH:mm" cancelText="Abbrechen"
+                        doneText="Fertig"></ion-datetime>
+                    </ion-item>
+
+                    <!-- end time -->
+                    <ion-item lines="none">
+                      <ion-label position="stacked">Endzeit</ion-label>
+                      <ion-datetime formControlName="endTime" displayFormat="HH:mm" cancelText="Abbrechen"
+                        doneText="Fertig"></ion-datetime>
+                    </ion-item>
+                  </div>
+                </ion-list>
+              </div>
+
+              <div class="employee-info">
+                <div class="employee">
+                  <div class="title container">
+                    <h3>Einsatzkraft</h3>
+                  </div>
+
+                  <ion-list>
+                    <div class="grid-2-l">
+                      <!-- personal qualfication-->
+                      <ion-item lines="none">
+                        <ion-label position="stacked">Einsatzkraft</ion-label>
+                        <ion-select formControlName="qualification" cancelText="Abbrechen" okText="Fertig">
+                          <ion-select-option *ngFor="let item of adQualifications" [value]='item'>{{item}}
+                          </ion-select-option>
+                        </ion-select>
+                      </ion-item>
+
+                      <!-- how many of those employees -->
+                      <ion-item lines="none">
+                        <ion-label position="stacked">Anzahl</ion-label>
+                        <ion-input formControlName="requiredEmployees" type="number" clearInput></ion-input>
+                      </ion-item>
+                    </div>
+
+                    <!-- wage -->
+                    <div class="grid-2-l">
+                      <!-- money -->
+                      <ion-item lines="none">
+                        <ion-label position="stacked">Honorar</ion-label>
+                        <ion-input formControlName="wage" type="number" clearInput></ion-input>
+                      </ion-item>
+
+                      <!-- money per day or per hour paid -->
+                      <ion-item lines="none">
+                        <ion-label position="stacked">Tag/Std.</ion-label>
+                        <ion-select formControlName="wageType" cancelText="Abbrechen" okText="Fertig">
+                          <ion-select-option value="HOURLY">pro Stunde</ion-select-option>
+                          <ion-select-option value="DAILY">pro Tag</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    </div>
+
+                    <!-- driving license -->
+                    <ion-item lines="none">
+                      <ion-label position="stacked">Führerschein benötigt?</ion-label>
+                      <ion-select formControlName="drivingLicence" cancelText="Abbrechen" okText="Fertig">
+                        <ion-select-option value="NO">Kein Führerschein</ion-select-option>
+                        <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
+                        <ion-select-option value="B">B</ion-select-option>
+                        <ion-select-option value="BE">BE</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                </div>
+
+                <div class="additional-employee" *ngFor="let extra of extraWorkforce; let j = index">
+                  <div class="title container" *ngIf="extra.index === i">
+                    <h3>Einsatzkraft <ion-icon name="close-circle" title="Remove newly created fields"
+                        (click)="removeField(j)"></ion-icon>
+                    </h3>
+                  </div>
+
+                  <div *ngIf="extra.index === i">
+                    <ion-list>
+                      <div class="grid-2-l">
+                        <!-- Adding new personal qualification -->
+                        <ion-item lines="none">
+                          <ion-label position="stacked">Einsatzkraft</ion-label>
+                          <ion-select [(ngModel)]="extra.qualification" [ngModelOptions]="{standalone: true}"
+                            cancelText="Abbrechen" okText="Fertig" (ionChange)='gettingModelValues(extra)'>
+                            <ion-select-option *ngFor="let item of adQualifications" [value]='item'>{{item}}
+                            </ion-select-option>
+                          </ion-select>
+                        </ion-item>
+
+                        <!-- how many of those employees -->
+                        <ion-item lines="none">
+                          <ion-label position="stacked">Anzahl</ion-label>
+                          <ion-input type="number" [(ngModel)]="extra.requiredEmployees"
+                            [ngModelOptions]="{standalone: true}" clearInput (ionChange)='gettingModelValues(extra)'>
+                          </ion-input>
+                        </ion-item>
+                      </div>
+
+                      <!-- wage -->
+                      <div class="grid-2-l">
+                        <!-- money -->
+                        <ion-item lines="none">
+                          <ion-label position="stacked">Honorar</ion-label>
+                          <ion-input type="number" [(ngModel)]="extra.wage" [ngModelOptions]="{standalone: true}"
+                            clearInput (ionChange)='gettingModelValues(extra)'></ion-input>
+                        </ion-item>
+
+                        <!-- money per day or per hour paid -->
+                        <ion-item lines="none">
+                          <ion-label position="stacked">Tag/Std.</ion-label>
+                          <ion-select [(ngModel)]="extra.wageType" [ngModelOptions]="{standalone: true}"
+                            cancelText="Abbrechen" okText="Fertig" (ionChange)='gettingModelValues(extra)'>
+                            <ion-select-option value="HOURLY">pro Stunde</ion-select-option>
+                            <ion-select-option value="DAILY">pro Tag</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+                      </div>
+
+                      <!-- driving license -->
+                      <ion-item lines="none">
+                        <ion-label position="stacked">Führerschein benötigt?</ion-label>
+                        <ion-select [(ngModel)]="extra.drivingLicence" [ngModelOptions]="{standalone: true}"
+                          cancelText="Abbrechen" okText="Fertig" (ionChange)='gettingModelValues(extra)'>
+                          <ion-select-option value="NO">Kein Führerschein</ion-select-option>
+                          <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
+                          <ion-select-option value="B">B</ion-select-option>
+                          <ion-select-option value="BE">BE</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+              </div>
+
+              <!-- create another "employee-info" just below the first one, the newly created one should have a remove icon so we can delete it if added by mistake -->
+              <div class="add-new container pointer" (click)="addField(i)">
+                <ion-icon name="add"></ion-icon>
+                <p>Weitere Einsatzkraft hinzufügen</p>
+              </div>
+
+              <!-- create ad -->
+              <div class="container">
+                <div class="divider"></div>
+                <ion-button color="primary" expand="block" *ngIf="i < days-1"
+                  [disabled]="form2[i].invalid || form2[i].pristine || empty" (click)="nextSlide()">Weiter
+                </ion-button>
+                <ion-button color="primary" expand="block" *ngIf="i == days-1"
+                  [disabled]="form2[i].invalid || form2[i].pristine || empty" (click)="submitForm(form2)">Jetzt Stelle
+                  erstellen
+                </ion-button>
+              </div>
+            </form>
+          </ion-slide>
+        </ion-slides>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

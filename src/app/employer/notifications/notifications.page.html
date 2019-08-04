@@ -1,0 +1,102 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <div class="logo">
+        <p>medApp</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h1>Nachrichten</h1>
+      </div>
+      <div class="notifications">
+        <!-- all notifications received today -->
+        <div class="today">
+          <p class="small-title container">Heute</p>
+          <div class="list-items">
+            <!-- that notification comes, if someone applied on an ad -->
+            <div *ngFor="let item of today">
+              <div class="item" (click)="navigateApplication(item)">
+                <div class="item-text text container pointer">
+                  <!-- <p>Sie haben eine Bewerbung auf Ihrer Stellenanzeige erhalten.</p> -->
+                  <p> {{item?.message}} </p>
+                </div>
+                <div class="item-icon">
+                  <ion-icon name="arrow-forward"></ion-icon>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- that notification comes, if someone cancelled the job -->
+
+            <!-- <div class="item" (click)="navigateApplication()">
+              <div class="item-text text container">
+                <p>Eine Einsatzkraft hat den Einsatztermin abgesagt.</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <!-- all notifications received yesterday -->
+        <div class="yesterday" *ngIf="yesterday.length > 0">
+          <p class="small-title container">Gestern</p>
+          <div class="list-items" *ngFor="let item of yesterday">
+            <div class="item" (click)="navigateApplication(item)">
+              <div class="item-text text container pointer">
+                <!-- <p>Sie haben eine Bewerbung auf Ihrer Stellenanzeige erhalten.</p> -->
+                <p>{{item?.message}}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- all notifications received last 7 days -->
+        <div class="week">
+          <p class="small-title container" *ngIf="older.length > 0">Letzte 7 Tage</p>
+          <div class="list-items" *ngFor="let item of older">
+            <div class="item" (click)="navigateApplication(item)">
+              <div class="item-text text container pointer">
+                <!-- <p>Sie haben eine Bewerbung auf Ihrer Stellenanzeige erhalten.</p> -->
+                <p>{{item?.message}}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [class.active]="currentUrl == '/employer/ads'" routerLink="/employer/ads" routerDirection="root">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Stellenanzeigen</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employer/notifications'" routerLink="/employer/notifications"
+      routerDirection="root">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>Nachrichten</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employer/profile'" routerLink="/employer/profile"
+      routerDirection="root">
+      <ion-icon name="contact"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

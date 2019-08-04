@@ -1,0 +1,58 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <div class="logo">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h1>Personal Qualification</h1>
+      </div>
+
+
+
+      <div class="employees">
+
+        <div class="list-items">
+          <!-- change personal qualifications -->
+
+          <div class="title container">
+          <ion-label position="stacked">New Qualification</ion-label>
+        </div>
+            <div class="item" >
+                <div class="item-text text container">
+                    <ion-input type="text" clearInput name="qualification" required [(ngModel)]="newQualification" > </ion-input>
+                </div>
+                <div class="item-icon" (click)="addQualification()" style="cursor: pointer;" >
+                 <h6>Add</h6>
+                </div>
+              </div>
+              <br>
+              <div class="divider"></div>
+          <div class="item" *ngFor="let item of qualification; let i = index;" >
+            <div class="item-text text container">
+              <p>{{item}}</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-up" (click)="moveUp(i)" style="cursor: pointer;" *ngIf="i !== 0" ></ion-icon>
+              <ion-icon name="arrow-down" (click)="moveDown(i)" style="cursor: pointer;" *ngIf="i !== qualification.length - 1" ></ion-icon>
+              <ion-icon name="trash" (click)="delete(i)" style="cursor: pointer;" ></ion-icon>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+
+          <div class="container" *ngIf="qualification">
+              <ion-button color="primary" expand="block"
+                class="button button-primary" (click)="update()" >Update</ion-button>
+            </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,89 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back" routerLink="/employer/ads">
+      </ion-back-button>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h2>Neue Stelle</h2>
+        <div class="text">
+          <p></p>
+        </div>
+      </div>
+      <!-- {{minDate}}
+      {{maxDate}} -->
+
+      <div class="general">
+        <form [formGroup]="form">
+          <ion-list>
+            <!-- ad title -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Einsatzart</ion-label>
+              <ion-input type="text" clearInput autocapitalize="word" formControlName="jobTitle" requierd></ion-input>
+            </ion-item>
+
+            <!-- where? (address) -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Wo?</ion-label>
+              <ion-input type="text" clearInput autocapitalize="word" [(ngModel)]="location.addressAutocomplete.query"
+                [ngModelOptions]="{standalone: true}" (ionInput)="getLocations()" (ionBlur)="pickupBlur()"
+                (ionFocus)="pickupFocus()" required></ion-input>
+            </ion-item>
+
+            <ion-list [hidden]="location.addressAutocompleteItems.length === 0 || disableaddress === true || location.addressAutocomplete.query.length === 0 ">
+              <ion-item *ngFor="let item of location.addressAutocompleteItems" tappable (click)="addressItem(item)">
+                {{ item }}
+              </ion-item>
+            </ion-list>
+
+            <!-- when? -->
+            <div class="grid-2">
+              <!-- start date -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Startdatum</ion-label>
+                <ion-datetime #stratDate formControlName="startDate" displayFormat="DD.MM.YYYY"
+                  (ionChange)="gettingDate(form)" [min]="minDate" [max]="maxDate" cancelText="Abbrechen"
+                  doneText="Fertig" required>
+                </ion-datetime>
+              </ion-item>
+
+              <!-- last date -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Enddatum</ion-label>
+                <ion-datetime #endDate formControlName="endDate" displayFormat="DD.MM.YYYY"
+                  (ionChange)="gettingDate(form)" [min]="minDate" [max]="maxDate" cancelText="Abbrechen"
+                  doneText="Fertig" required>
+                </ion-datetime>
+              </ion-item>
+            </div>
+          </ion-list>
+
+          <div class="container">
+            <div class="box">
+              <!-- continuous work   [attr.disabled]="continueWork" -->
+              <ion-item lines="none">
+                <ion-checkbox formControlName="continoueWork" value="CONTINUOUS" checked='false'></ion-checkbox>
+                <ion-label>&nbsp; Durchgehende Schicht?</ion-label>
+              </ion-item>
+            </div>
+
+            <!-- fast reply -->
+            <div class="box">
+              <ion-item lines="none">
+                <ion-checkbox formControlName="fastReply" value="FASTREPLY" checked='false'></ion-checkbox>
+                <ion-label>&nbsp; Schnelle Rückmeldung</ion-label>
+              </ion-item>
+            </div>
+
+            <!-- go to the ad details; "Alle Termine gleich" = same dates / "Einzelne Termine bearbeiten" = different dates -->
+            <ion-button color="primary" expand="block" [disabled]="!form.valid " (click)="submit(form)">Zu den Einsatzdetails</ion-button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

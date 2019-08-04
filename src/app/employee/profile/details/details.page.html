@@ -1,0 +1,104 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h2>Persönliche Daten ändern</h2>
+      </div>
+
+      <div class="general">
+        <form [formGroup]="form">
+          <ion-list>
+            <!-- profile image -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Profilbild</ion-label>
+              <div class="profile-image container pointer">
+                <img src="{{image }} " (click)="choosePicture()" id="profileImage">
+                <input type="file" (change)="upload($event)" accept=".png,.jpg" style="visibility: hidden;">
+              </div>
+            </ion-item>
+
+            <!-- name -->
+            <div class="grid-2">
+              <!-- first name -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Vorname</ion-label>
+                <ion-input type="text" clearInput autocapitalize="word" formControlName="vorname" autocomplete
+                  autocorrect></ion-input>
+              </ion-item>
+
+              <!-- last name -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Nachname</ion-label>
+                <ion-input type="text" clearInput autocapitalize="word" formControlName="nachname" autocomplete
+                  autocorrect></ion-input>
+              </ion-item>
+            </div>
+
+            <!-- address -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Adresse</ion-label>
+              <ion-input type="text" clearInput autocapitalize="word" [(ngModel)]="location.addressAutocomplete.query"
+                [ngModelOptions]="{standalone: true}" (ionInput)="getLocations()" (ionBlur)="pickupBlur()"
+                (ionFocus)="pickupFocus()"></ion-input>
+            </ion-item>
+
+            <ion-list
+              [hidden]="location.addressAutocompleteItems.length === 0 || disableaddress === true || location.addressAutocomplete.query.length === 0 ">
+              <ion-item *ngFor="let item of location.addressAutocompleteItems" tappable (click)="addressItem(item)">
+                {{ item }}
+              </ion-item>
+            </ion-list>
+
+
+            <!-- phone number -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Telefonnumer</ion-label>
+              <ion-input type="text" clearInput autocapitalize="word" formControlName="telefonnumer" autocomplete
+                autocorrect></ion-input>
+            </ion-item>
+
+            <!-- association -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Zugehörigkeit Hi. Orga.</ion-label>
+              <ion-input type="text" clearInput formControlName="zugehörigkeit"></ion-input>
+            </ion-item>
+
+            <!-- max. work radius -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Max. Einsatzradius</ion-label>
+              <ion-select cancelText="Abbrechen" okText="Fertig" formControlName="Einsatzradius">
+                <ion-select-option>10km</ion-select-option>
+                <ion-select-option>25km</ion-select-option>
+                <ion-select-option>50km</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <!-- email -->
+            <ion-item lines="none">
+              <ion-label position="stacked">E-Mail</ion-label>
+              <ion-input type="email" clearInput formControlName="email"></ion-input>
+            </ion-item>
+
+            <!-- password change -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Passwort</ion-label>
+              <ion-input type="password" clearInput formControlName="password"></ion-input>
+            </ion-item>
+          </ion-list>
+
+          <div class="divider"></div>
+
+          <div class="container">
+            <ion-button color="primary" expand="block" [disabled]="!form.valid || form.pristine " (click)="submit(form)">Aktualisieren</ion-button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

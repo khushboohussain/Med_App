@@ -1,0 +1,69 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <!-- name of organisation -->
+      <div class="title container">
+        <!-- <h2>Deutsches Rotes Kreuz</h2> -->
+        <h2> {{data.CompanyName}} </h2>
+      </div>
+
+      <!-- organisation information -->
+      <div class="organisation-info">
+        <p class="small-title container">Allgemeine Informationen</p>
+        <div class="list-items">
+          <!-- address -->
+          <div class="item-no-icon container">
+            <!-- <p>Musterstr. 10, 10000 Musterhausen</p> -->
+            <p> {{data.address}} </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- organisation contact person -->
+      <div class="organisation-contact">
+        <p class="small-title container">Kontaktperson</p>
+        <div class="list-items">
+          <!-- first name last name -->
+          <div class="item-no-icon container">
+            <p> {{data.vorname}} {{data.nachname}} </p>
+          </div>
+
+          <!-- email -->
+          <div class="item-no-icon container">
+            <!-- <p>info@medapp.com</p> -->
+            <p> {{data.email }} </p>
+          </div>
+
+          <!-- phone number -->
+          <div class="item-no-icon container">
+            <!-- <p>+92 334 872 2424</p> -->
+            <p> {{ data.telephone}} </p>
+          </div>
+
+          <!-- organisation role -->
+          <div class="item-no-icon container">
+            <!-- <p>Vorstand</p> -->
+            <p> {{ data.role }} </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- block employer -->
+      <div class="container">
+        <ion-button color="primary" expand="block" [disabled]="isBlocked" (click)="blockUser()">Blockieren</ion-button>
+      </div>
+
+      <!-- delete employer -->
+      <div class="container">
+        <ion-button color="primary" expand="block" (click)="deleteUser()">Löschen</ion-button>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

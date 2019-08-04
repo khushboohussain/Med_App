@@ -1,0 +1,49 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h2>Login</h2>
+        <div class="text">
+          <p>Willkommen zurück! Trage deine Mail und das entsprechende Passwort, um onPoint zu starten.</p>
+        </div>
+      </div>
+
+      <!-- <div class="general"> -->
+      <form [formGroup]="form" (ngSubmit)="login(form)">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label position="stacked">E-Mail</ion-label>
+            <ion-input type="email" clearInput name="email" id="email" required formControlName="email"> </ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="stacked">Passwort</ion-label>
+            <ion-input type="password" clearInput iname="password" class="form-control" id="password" required
+              formControlName="password"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <div class="password-reset container">
+          <p class="btn-link pointer" (click)="navigatePasswordReset()">Passwort vergessen?</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="container">
+          <ion-button type="submit" [disabled]="form.invalid || form.pristine " color="primary" expand="block"
+            class="button button-primary" (keyup.enter)="login(form)"> Jetzt einloggen</ion-button>
+          <!-- (click)="login(form)" -->
+          <!-- (click)="navigateHome()" -->
+          <!-- [disabled]="form.pristine || form.invalid" -->
+        </div>
+
+      </form>
+      <!-- </div> -->
+
+
+    </div>
+  </div>
+</ion-content>

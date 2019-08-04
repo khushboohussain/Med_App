@@ -1,0 +1,65 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <div class="logo">
+        <p>medApp</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h1>Erste Schritte mit medAPP</h1>
+        <div class="text">
+          <p></p>
+        </div>
+      </div>
+
+      <div class="general">
+        <form [formGroup]="form">
+          <ion-list>
+            <!-- contact persons organisation role -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Ihre Rolle in der Organisation</ion-label>
+              <ion-select formControlName="role" cancelText="Abbrechen" okText="Fertig">
+                <ion-select-option>Geschäftsinhaber</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <!-- organisation name -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Name der Orga</ion-label>
+              <ion-input type="text" formControlName="CompanyName" clearInput autocapitalize="word" autocomplete autocorrect required></ion-input>
+            </ion-item>
+
+            <!-- organisation address -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Adresse</ion-label>
+              <ion-input type="text" clearInput autocapitalize="word" [(ngModel)]="location.addressAutocomplete.query"
+                [ngModelOptions]="{standalone: true}" (ionInput)="getLocations()" (ionBlur)="pickupBlur()"
+                (ionFocus)="pickupFocus()" required></ion-input>
+            </ion-item>
+            <ion-list
+              [hidden]="location.addressAutocompleteItems.length === 0 || disableaddress === true || location.addressAutocomplete.query.length === 0 ">
+              <ion-item *ngFor="let item of location.addressAutocompleteItems" tappable (click)="addressItem(item)">
+                {{ item }}
+              </ion-item>
+            </ion-list>
+
+            <!-- contact persons phone number -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Telefonnumer</ion-label>
+              <ion-input type="number" formControlName="telephone" clearInput autocomplete autocorrect required>
+              </ion-input>
+            </ion-item>
+          </ion-list>
+
+          <!-- finish onboarding -->
+          <div class="container">
+            <ion-button color="primary" expand="block" (click)="submit(form)" [disabled]="form.invalid || form.pristine">Einrichtung abschließen</ion-button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

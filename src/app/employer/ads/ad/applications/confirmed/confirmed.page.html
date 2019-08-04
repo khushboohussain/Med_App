@@ -1,0 +1,40 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <!-- confirmed applications -->
+      <div class="title container">
+        <h2>Bestätigte Bewerbungen</h2>
+        <div class="text">
+          <p>Alle bestätigten Bewerber.</p>
+        </div>
+      </div>
+
+      <!-- show applications after personal qualifications -->
+      <div class="applications">
+        <div class="list-items"  *ngFor="let item of data;">
+          <!-- personal qualification -->
+          <div class="title container" >
+            <h3> {{item?.category}} </h3>
+            <!-- <h3>Sanitätshelfer</h3> -->
+          </div>
+          <!-- show each application for the specific qualification -->
+          <div class="item pointer" (click)="navigateApplication(con)" *ngFor="let con of item?.confirm; let i = index;">
+            <!-- FIRST NAME LAST NAME -->
+            <div class="item-text text container">
+              <p> {{con?.name}} </p>
+              <!-- <p>Max Mustermann</p> -->
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <!-- Ad title -->
+      <div class="title container">
+        <!-- <h2>Einsatzart</h2> -->
+        <h2> {{AdData.jobTitle}} </h2>
+      </div>
+
+      <div class="ad-info">
+        <div class="address">
+          <p class="small-title container">Allgemeine Informationen</p>
+          <div class="list-items">
+            <!-- What kind of qualification -->
+            <div class="item-no-icon container">
+              <p>{{(AdData?.matchingQualification?.qualification) ? AdData?.matchingQualification?.qualification : AdData?.matchingQualification?.qualification }}</p>
+            </div>
+            <!-- Wage, FORMAT: Honorar: "MONEY" / "If DAILY then Tag, if HOURLY then Stunde" -->
+            <div class="item-no-icon container">
+              <p>Honorar: {{AdData?.matchingQualification?.wage ? AdData?.matchingQualification?.wage : AdData?.wage }}€/{{AdData?.matchingQualification?.wageType ? AdData?.matchingQualification?.wageType : AdData?.wageType}} </p>
+            </div>
+            <!-- Is driving license necessary? 
+              If yes - FORMAT: Führerscheinklasse "DRIVING LICENSE TYPE", 
+              else if no - FORMAT: Es wird kein Führerschein benötigt, 
+              else if beneficial - FORMAT: Führerschein wäre vorteilhaft, kein Muss. -->
+            <div class="item-no-icon container">
+              <p>Führerscheinklasse: {{ (AdData?.matchingQualification?.drivingLicence) ? (getLisence(AdData?.matchingQualification?.drivingLicence)) : (getLisence(AdData?.drivingLicence) ) }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="container">
+          <ion-button color="primary" expand="block" (click)="sendApplication()" [disabled]="isApply()">Jetzt bewerben
+          </ion-button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

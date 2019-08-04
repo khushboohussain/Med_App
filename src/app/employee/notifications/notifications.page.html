@@ -1,0 +1,116 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <div class="logo">
+        <p>medApp</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h1>Nachrichten</h1>
+      </div>
+      <div class="notifications">
+        <!-- all notifications received today -->
+        <div class="today">
+          <p class="small-title container">Heute</p>
+          <div class="list-items">
+            <!-- that notification comes, if the application got accepted -->
+            <div *ngFor="let item of today">
+              <div class="item" (click)="navigateAppointment(item)">
+                <div class="item-text text container pointer">
+                  <p>{{item?.message}}</p>
+                </div>
+                <div class="item-icon">
+                  <ion-icon name="arrow-forward"></ion-icon>
+                </div>
+              </div>
+            </div>
+
+            <!-- that notification comes, if the application didnt get accepted -->
+            <!-- <div class="item" (click)="navigateAd()">
+              <div class="item-text text container">
+                <p>Leider haben Sie eine Absage erhalten.</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div> -->
+
+            <!-- that notification comes, if the employee gets a job offer -->
+            <!-- <div class="item" (click)="navigateAd()">
+              <div class="item-text text container">
+                <p>Sie haben eine neue Stellenanfrage erhalten. Jetzt bewerben!</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div> -->
+
+            <!-- that notification comes, if the employee needs to send again a training certificate -->
+            <!-- <div class="item">
+              <div class="item-text text container">
+                <p>Bitte senden Sie uns innerhalb der nächsten 2 Wochen einen neuen Fortbildungsnachweis, um medAPP weiterhin zu nutzen.</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <!-- all notifications received yesterday -->
+        <div class="yesterday">
+          <p class="small-title container" *ngIf="yesterday.length > 0">Gestern</p>
+          <div class="list-items" *ngFor="let item of yesterday">
+            <div class="item" (click)="navigateAppointment(item)">
+              <div class="item-text text container pointer">
+                <p>{{item?.message}}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- all notifications received last 7 days -->
+        <div class="week">
+          <p class="small-title container" *ngIf="older.length > 0">Letzte 7 Tage</p>
+          <div class="list-items" *ngFor="let item of older">
+            <div class="item" (click)="navigateAppointment(item)">
+              <div class="item-text text container pointer">
+                <p>{{item?.message}}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [class.active]="currentUrl == '/employee/appointments'" routerLink="/employee/appointments"
+      routerDirection="root">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Stellenanzeigen</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employee/notifications'" routerLink="/employee/notifications"
+      routerDirection="root">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>Nachrichten</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employee/profile'" routerLink="/employee/profile"
+      routerDirection="root">
+      <ion-icon name="contact"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

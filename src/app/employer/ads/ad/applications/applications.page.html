@@ -1,0 +1,40 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+      <!-- <ion-icon name="arrow-round-back"  (click)="navigateBack()" ></ion-icon> -->
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <!-- Show by defaul all applications, if more than 1 personal qualification is needed, I should able to filter between those -->
+        <h2>Alle Bewerbungen</h2>
+        <div class="text">
+          <p>Alle Bewerbungen sortiert nach Qualifikation.</p>
+        </div>
+      </div>
+
+      <!-- show applications after personal qualifications -->
+      <div class="applications">
+        <div class="list-items" *ngFor="let item of data">
+          <!-- personal qualification -->
+          <div class="title container">
+            <h3>{{item?.category}} </h3>
+          </div>
+
+          <!-- show each application for the specific qualification -->
+          <div class="item pointer" *ngFor="let apply of item?.apply; let i=index" (click)="navigateApplication(apply)">
+            <div class="item-text text container">
+              <!-- FIRST NAME LAST NAME -->
+              <p>{{apply?.name }}</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon class="pointer" name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

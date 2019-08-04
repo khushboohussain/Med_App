@@ -1,0 +1,30 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h2>Stellenanfragen</h2>
+      </div>
+
+      <!-- all ads received  -->
+      <div class="ads" *ngFor="let item of allAds">
+        <div class="list-items">
+          <!-- single ad -->
+          <div class="item pointer" (click)="navigateAd(item)">
+            <!-- ad title -->
+            <div class="item-text text container">
+              <p>{{item?.jobTitle}}</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

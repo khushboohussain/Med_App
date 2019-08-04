@@ -1,0 +1,13 @@
+.profile-image {
+  margin-bottom: 12px;
+  width: 100%;
+
+  img {
+    object-fit: cover;
+    height: 124px;
+    width: 124px;
+    max-width: unset;
+    border-radius: 100%;
+    // transform: rotate(-90deg);
+  }
+}

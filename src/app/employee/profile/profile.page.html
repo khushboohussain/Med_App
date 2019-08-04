@@ -1,0 +1,101 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <div class="logo">
+        <p>medApp</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h1>Profil</h1>
+      </div>
+      <div class="general">
+        <p class="small-title container">Allgemein</p>
+        <div class="list-items">
+          <div class="item pointer" (click)="navigateDetails()">
+            <div class="item-text text container">
+              <p>Persönliche Daten ändern</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+          <div class="item pointer" (click)="navigateQualifications()">
+            <div class="item-text text container">
+              <p>Qualifikationen ändern</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-text text container">
+              <p>Supportanfrage</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="law">
+        <p class="small-title container">Rechtliches & mehr</p>
+        <div class="list-items">
+          <div class="item">
+            <div class="item-text text container">
+              <p>Impressum</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-text text container">
+              <p>Datenschutz</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-text text container">
+              <p>Allgemeine Geschäftsbedingungen</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+          <div class="item pointer" (click)="navigateStart()">
+            <div class="item-text text container">
+              <p>Ausloggen</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [class.active]="currentUrl == '/employee/appointments'" routerLink="/employee/appointments" routerDirection="root">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Stellenanzeigen</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employee/notifications'" routerLink="/employee/notifications" routerDirection="root">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>Nachrichten</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employee/profile'" routerLink="/employee/profile" routerDirection="root">
+      <ion-icon name="contact"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

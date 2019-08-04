@@ -1,0 +1,70 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <div class="logo">
+        <p>medApp</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h1>Appeinstellungen</h1>
+      </div>
+
+      <div class="employees">
+        <div class="list-items">
+          <!-- change personal qualifications -->
+          <div class="item" (click)="navigateEmployer()">
+            <div class="item-text text container">
+              <p>Persönliche Qualifikationen</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+
+          <!-- change images for personal qualifications -->
+          <div class="item">
+            <div class="item-text text container">
+              <p>Bilder anpassen</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+
+          <div class="item" (click)="logout()">
+            <div class="item-text text container">
+              <p>Ausloggen</p>
+            </div>
+            <div class="item-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [class.active]="currentUrl == '/admin/employees'" routerLink="/admin/employees"
+      routerDirection="root">
+      <ion-icon name="people"></ion-icon>
+      <ion-label>Einsatzkräfte</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/admin/employers'" routerLink="/admin/employers"
+      routerDirection="root">
+      <ion-icon name="medkit"></ion-icon>
+      <ion-label>Organisationen</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/admin/settings'" routerLink="/admin/settings"
+      routerDirection="root">
+      <ion-icon name="cog"></ion-icon>
+      <ion-label>Einstellungen</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

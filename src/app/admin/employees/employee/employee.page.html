@@ -1,0 +1,100 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <!-- name of employee -->
+      <div class="title container">
+        <!-- <h2>Max Mustermann</h2> -->
+        <h2> {{getData.vorname }} {{getData.nachname}} </h2>
+      </div>
+
+      <div class="info">
+        <!-- employee profile image -->
+        <div class="profile-image container">
+          <img src="{{getData.imageURL}}">
+        </div>
+
+        <!-- employee information -->
+        <div class="employee-info">
+          <p class="small-title container">Allgemeine Informationen</p>
+          <div class="list-items">
+            <!-- email -->
+            <div class="item-no-icon container">
+              <p>{{getData.email}}</p>
+            </div>
+            <!-- address -->
+            <div class="item-no-icon container">
+              <p>{{getData.adresse}}</p>
+            </div>
+            <!-- phone number -->
+            <div class="item-no-icon container">
+              <p>{{getData.telefonnumer}}</p>
+            </div>
+            <!-- association -->
+            <div class="item-no-icon container">
+              <p>{{getData.zugehorigkeit}}</p>
+            </div>
+            <!-- max. work radius -->
+            <div class="item-no-icon container">
+              <p>{{getData.Einsatzradius}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="employee-qualifications">
+          <p class="small-title container">Qualifikationsnachweise</p>
+          <div class="list-items">
+            <!-- personal qualification -->
+            <div class="item-no-icon container">
+              <p>{{getData.qualifikation}}</p>
+            </div>
+            <!-- qualification certificate -->
+            <div class="item-no-icon container">
+              <p class="pointer" (click)="downloadCredential1()">Qualifikationsnachweis Click to download
+                {{getData?.files[2]?.name}}</p>
+              <p class="pointer" (click)="downloadCredential2()">Qualifikationsnachweis Click to download
+                {{getData?.files[3]?.name}}</p>
+            </div>
+            <!-- training certificate -->
+            <div class="item-no-icon container pointer">
+              <p (click)="downloadtrainingCertificate()">Fortbildungsnachweis Click to download
+                {{getData?.files[0]?.name}}</p>
+            </div>
+            <!-- driver license, FORMAT: Führerschein: "DRIVING LICENSE TYPE" -->
+            <div class="item-no-icon container" *ngIf="getData.files[4] && getData.files[5]">
+              <p (click)="downloadDrivingLisence1()">Führerschein: Click to download {{getData.files[4].name}}</p>
+              <p (click)="downloadDrivingLisence2()">Führerschein: Click to download {{getData.files[5].name}}</p>
+            </div>
+            <!-- other qualification, show each other qualification as an entry -->
+            <div class="item-no-icon container">
+              <p>{{getData.qualification}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- accept or not accept employee, show only if still not accepted -->
+
+        <div class="container">
+          <ion-button color="primary" expand="block" (click)="acceptEmployee()" [hidden]="isStatus()===true">Akzeptieren
+            / Ablehnen</ion-button>
+        </div>
+
+        <!-- block employee -->
+        <div class="container">
+          <ion-button color="primary" expand="block" (click)="blockEmployee()">Blockieren</ion-button>
+        </div>
+
+        <!-- delete employee -->
+        <div class="container">
+          <ion-button color="primary" expand="block" (click)="deleteEmployee()">Löschen</ion-button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

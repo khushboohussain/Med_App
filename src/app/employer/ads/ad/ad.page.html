@@ -1,0 +1,158 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <!-- <h2>Einsatzart</h2> -->
+        <h2> {{data.jobTitle}} </h2>
+      </div>
+
+      <div class="card-list container">
+        <!-- dont show this one => once the employer got all his employees -->
+        <div *ngIf="!getAllEmployees" class="small-red-card pointer" (click)="navigateApplications()">
+          <h2>Bewerbungen (<span>{{ totalApp }}</span>)</h2>
+        </div>
+        <!-- show this one only if the employer accepted at least one employee -->
+        <div *ngIf="acceptedEmploye" class="small-red-card pointer" (click)="navigateConfirmedApplications()">
+          <h2>Zusagen ( <span>{{ totalConfirm }} </span>)</h2>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="ad-info">
+        <!-- Where will the job be? -->
+        <div class="address">
+          <p class="small-title container">Wo? </p>
+          <div class="list-items">
+            <div class="item-no-icon container">
+              <!-- <p>Musterstr. 10, 10000 Musterhausen {{data.location}}</p> -->
+              <p>{{data.location}}</p>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as same dates and continuous is not selected-->
+        <div class="same-dates" *ngIf="option1">
+          <!-- when will the job be? -->
+          <div class="when">
+            <p class="small-title container">Wann? </p>
+            <div class="list-items">
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" - "LAST DATE" zwischen "START TIME" - "END TIME" Uhr -->
+                <!-- <p>Am 01.01.19 - 02.01.19 zwischen 09.00 - 18.00 Uhr</p> -->
+                <p>Am {{data.startDate }} - {{data.endDate}} zwischen {{data.startTime}} - {{data.endTime}} Uhr</p>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- show personal qualification needed -->
+          <div class="who">
+            <p class="small-title container">Wer?</p>
+            <div class="list-items">
+              <!-- FORMAT: "AMOUNT PERSONAL QUALIFICATION" - "DRIVING LICENSE" - "WAGE MONEY" / "If DAILY then Tag, if HOURLY then Stunde" -->
+              <div class="item-no-icon container">
+                <!-- <p>5 Sanitätshelfer - B1 - 100,00€/Tag</p> -->
+                <p>{{data.qualification}}/{{data.requiredEmployees}} - {{licenseTypes[0]}} -
+                  {{data.wage}}€/{{formatType[0]}}
+                </p>
+                <!-- 123 {{licenseType}} -->
+              </div>
+            </div>
+          </div>
+          <!-- end of personal qualification -->
+          <!-- Other Qualificatioss  -->
+          <div class="who" *ngIf="data.otherQualification.length > 0">
+            <p class="small-title container">Wer?</p>
+            <div class="list-items">
+              <div class="item-no-icon container" *ngFor="let list of data.otherQualification; let i = index ">
+                <p>{{list.qualification}}/{{list.requiredEmployees}} - {{licenseTypes[i + 1]}} -
+                  {{list.wage}}€/{{formatType[i + 1]}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as same dates and continuous is selected-->
+        <div *ngIf="option2" class="same-dates-continuous">
+          <!-- when will the job be? -->
+          <div class="when">
+            <p class="small-title container">Wann?</p>
+            <div class="list-items">
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" um "START TIME" Uhr bis zum "LAST DATE" um "END TIME" Uhr -->
+                <!-- <p>Am 01.01.19 um 09.00 Uhr bis zum 02.01.19 um 09.00 Uhr</p> -->
+                <p>Am {{data.startDate}} um {{data.startTime}} Uhr bis zum {{data.endDate }} um {{ data.endTime}} Uhr
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- show personal qualification needed -->
+          <div class="who">
+            <p class="small-title container">Wer?</p>
+            <div class="list-items">
+              <div class="item-no-icon container">
+                <!-- FORMAT: "AMOUNT PERSONAL QUALIFICATION" - "DRIVING LICENSE" - "WAGE MONEY" / "If DAILY then Tag, if HOURLY then Stunde" -->
+                <p>{{data.qualification}}/{{data.requiredEmployees}} - {{licenseTypes[0]}}-
+                  {{data.wage}}€/{{formatType[0]}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- end of personal qualification -->
+          <!-- Other Qualificatioss  -->
+          <div class="who" *ngIf="data.otherQualification.length > 0">
+            <p class="small-title container">Wer?</p>
+            <div class="list-items">
+              <div class="item-no-icon container" *ngFor="let list of data.otherQualification; let i = index ">
+                <p>{{list.qualification}}/{{list.requiredEmployees}} - {{licenseTypes[i + 1]}} -
+                  {{list.wage}}€/{{formatType[i + 1]}}
+                </p>
+                <!-- {{licenseTypes[i + 1]}} -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as different dates and continuous is not selected-->
+        <div *ngIf="option3" class="different-dates">
+          <div class="when-who">
+            <p class="small-title container">Wann und wer?</p>
+            <!-- Show for each date -->
+            <div class="list-items" *ngFor="let item of step2; let i = index;">
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" zwischen "START TIME" - "END TIME" Uhr -->
+                <p>Am {{data.startDate}} zwischen {{item.startTime }} - {{data.endTime}} Uhr</p>
+              </div>
+
+              <div class="item-no-icon container">
+                <!-- FORMAT: "AMOUNT PERSONAL QUALIFICATION" - "DRIVING LICENSE" - "WAGE MONEY" / "If DAILY then Tag, if HOURLY then Stunde" -->
+                <p>{{item.qualification}}/{{item.requiredEmployees }} - {{ licenseTypes[i] }} -
+                  {{item.wage }}€/{{formatType[i]}} </p>
+              </div>
+              <!-- other Qualifications -->
+              <div class="item-no-icon container" *ngIf="item.otherQualification.length > 0">
+                <p *ngFor="let x of item.otherQualification let y = index">
+                  other Qualification's Data:=
+                  {{x.qualification}}/{{x.requiredEmployees }} -
+                  {{ otherlicenceType[y + i] }} -
+                  {{x.wage }}€/{{otherFormatType[y + i] }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</ion-content>

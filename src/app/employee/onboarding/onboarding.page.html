@@ -1,0 +1,153 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <div class="logo">
+        <p>medApp</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h1>Erste Schritte</h1>
+        <div class="text">
+          <p></p>
+        </div>
+      </div>
+
+      <div class="general">
+        <form [formGroup]="form">
+          <div class="personal-data">
+            <ion-list>
+              <div class="grid-1">
+                <!-- profile image -->
+                <ion-item lines="none">
+                  <ion-label position="stacked">Profilbild</ion-label>
+                  <div class="profile-image container">
+                    <img src="{{image || base64Image}} " (click)="choosePicture()" id="profileImage">
+                    <input type="file" (change)="upload($event)" accept=".png,.jpg" style="visibility: hidden;">
+                  </div>
+                </ion-item>
+              </div>
+
+              <!-- address -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Adresse</ion-label>
+                <ion-input type="text" clearInput autocapitalize="word" [(ngModel)]="location.addressAutocomplete.query"
+                  [ngModelOptions]="{standalone: true}" (ionInput)="getLocations()" (ionBlur)="pickupBlur()"
+                  (ionFocus)="pickupFocus()"></ion-input>
+              </ion-item>
+
+              <ion-list
+                [hidden]="location.addressAutocompleteItems.length === 0 || disableaddress === true || location.addressAutocomplete.query.length === 0 ">
+                <ion-item *ngFor="let item of location.addressAutocompleteItems" tappable (click)="addressItem(item)">
+                  {{ item }}
+                </ion-item>
+              </ion-list>
+
+              <!-- phone number -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Telefonnumer</ion-label>
+                <ion-input type="text" clearInput autocapitalize="word" formControlName="telefonnumer" autocomplete
+                  autocorrect required></ion-input>
+              </ion-item>
+
+              <!-- association-->
+              <ion-item lines="none">
+                <ion-label position="stacked">Zugehörigkeit Hi. Orga.</ion-label>
+                <ion-input type="text" clearInput formControlName="zugehorigkeit" required></ion-input>
+              </ion-item>
+
+              <!-- max. work radius -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Max. Einsatzradius</ion-label>
+                <ion-select cancelText="Abbrechen" okText="Fertig" formControlName="Einsatzradius">
+                  <ion-select-option>10km</ion-select-option>
+                  <ion-select-option>25km</ion-select-option>
+                  <ion-select-option>50km</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <!-- passport -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Ausweis</ion-label>
+                <ion-input type="file" formControlName="AusweisA" (change)="uploadFile($event, 0)"
+                  placeholder="Ausweis Vorderseite hochladen" required></ion-input>
+                <ion-input type="file" formControlName="AusweisB" (change)="uploadFile($event, 1)"
+                  placeholder="Ausweis Rückseite hochladen" required></ion-input>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- qualifications -->
+          <div class="qualifications-data">
+            <div class="title container">
+              <h3>Qualfikationen</h3>
+            </div>
+            <ion-list>
+              <!-- personal qualifications -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Persönliche Qualifikation</ion-label>
+                <ion-select cancelText="Abbrechen" okText="Fertig" formControlName="qualifikation">
+                  <ion-select-option *ngFor="let item of adQualifications" [value]='item'>{{item}}</ion-select-option>
+                </ion-select>
+
+                <!-- qualification certificate -->
+                <ion-input type="file" formControlName="abc" (change)="uploadFile($event, 2)"
+                  placeholder="Qualifikationsnachweis hochladen" required></ion-input>
+
+                <!-- training certificate -->
+                <ion-input type="file" formControlName="cde" (change)="uploadFile($event, 3)"
+                  placeholder="Fortbildungsnachweis hochladen" required></ion-input>
+              </ion-item>
+
+              <!-- driving license -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Führerscheinklasse</ion-label>
+                <ion-select cancelText="Abbrechen" okText="Fertig" formControlName="führerscheinklasse">
+                  <ion-select-option value="NO">Kein Führerschein</ion-select-option>
+                  <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
+                  <ion-select-option value="B">B</ion-select-option>
+                  <ion-select-option value="BE">BE</ion-select-option>
+                </ion-select>
+
+                <!-- Show only if first option is not selected, driving license certificate -->
+                <ion-input type="file" formControlName="efg" (change)="uploadFile($event, 4)"
+                  placeholder="Führerschein Vorderseite hochladen" required></ion-input>
+                <ion-input type="file" formControlName="ghi" (change)="uploadFile($event, 5)"
+                  placeholder="Führerschein Rückseite hochladen" required></ion-input>
+              </ion-item>
+
+              <!-- other qualification -->
+              <ion-item lines="none" *ngFor="let item of field; let i = index;">
+                <ion-label position="stacked">Sonstige Qualifikation (optional)</ion-label>
+
+                <!-- name of qualification -->
+                <ion-input type="text" clearInput [(ngModel)]="item.text" [ngModelOptions]="{standalone: true}">
+                </ion-input>
+
+                <!-- other qualification certificate -->
+                <ion-input type="file" (change)="uploadFile($event, 6, i)" placeholder="Qualifikationsnachweis">
+                </ion-input>
+              </ion-item>
+
+              <!-- add another other qualification -->
+              <div class="add-new container" (click)="addNewfield()">
+                <ion-icon name="add"></ion-icon>
+                <p>Weitere sonstige Qualifikation hinzufügen</p>
+              </div>
+            </ion-list>
+          </div>
+
+          <!-- finish onboarding -->
+          <div class="container">
+            <ion-button color="primary" expand="block" [disabled]="form.invalid || form.pristine"
+              (click)="submit(form)">Einrichtung abschließen</ion-button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

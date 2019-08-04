@@ -1,0 +1,57 @@
+<ion-content>
+  <div class="main container">
+    <div class="header">
+      <div class="logo">
+        <p>medApp</p>
+      </div>
+      <!-- if payment details are not set yet, redirect to /employer/profile/payment-methods -->
+      <ion-icon class="pointer" name="add" (click)="navigateCreateAd()"></ion-icon>
+    </div>
+
+    <div class="content">
+      <div class="title">
+        <h1>Laufende Stellen</h1>
+      </div>
+      <div class="ads" *ngFor="let item of getAds; let i = index">
+        <div class="red-card" (click)="navigateAd(item)">
+          <!-- ad title  -->
+          <h2 class="pointer">{{item?.jobTitle}} </h2>
+          <div class=" info">
+            <!-- job date; FORMAT: Datum "STARTDATE" - "ENDDATE" -->
+            <p>
+              <b>Datum</b>
+              <br> {{endStartDate[i]}}
+            </p>
+            <!-- job address; FORMAT: Einsatzort: "CITY" -->
+            <p>
+              <b>Einsatzort</b>
+              <br>{{item?.location}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Ads end -->
+    </div>
+  </div>
+</ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button [class.active]="currentUrl == '/employer/ads'" routerLink="/employer/ads" routerDirection="root">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Stellenanzeigen</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employer/notifications'" routerLink="/employer/notifications"
+      routerDirection="root">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>Nachrichten</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [class.active]="currentUrl == '/employer/profile'" routerLink="/employer/profile"
+      routerDirection="root">
+      <ion-icon name="contact"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

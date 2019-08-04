@@ -1,0 +1,127 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <!-- ad title -->
+      <div class="title container">
+        <!-- <h2>Einsatzart</h2> -->
+        <h2>{{AdData.jobTitle}}</h2>
+      </div>
+
+      <div class="ad-info">
+        <div class="who" >
+          <p class="small-title container">Gesucht werden</p>
+          <div class="list-items">
+            <!-- show all personal qualification which are searched for -->
+            <div class="item pointer" (click)="navigateAdDetails()">
+              <div class="item-text text container">
+                <p>{{(AdData?.matchingQualification?.qualification) ? AdData?.matchingQualification?.qualification : AdData?.matchingQualification?.qualification }}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+            <!-- other Qualifications -->
+            <!-- <div class="item pointer" *ngIf="otherQualification.length > 0">
+              <div class="item-text text container" *ngFor="let item of otherQualification; let x= index"
+                (click)="navigateAdDetails(x)">
+                <p>other {{otherQualification[x]}}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <!-- <div class="who" *ngIf="this.AdData.condition3">
+          <p class="small-title container">Gesucht werden</p>
+          <div class="list-items" *ngFor="let item of step2; let i = index ">
+            show all personal qualification which are searched for
+            <div class="item pointer" (click)="navigateAdDetails2(i, item, -1)">
+              <div class="item-text text container">
+                <p>{{qualification[i] }}</p>
+                <p>{{otherQualification[i] }}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+            other Qualifications
+            <div class="item pointer" *ngIf="otherQualification.length > 0">
+              <div class="item-text text container" *ngFor="let item of otherQualification; let x= index"
+                (click)="navigateAdDetails2(i, item, x)">
+                <p>other = {{otherQualification[x]}}</p>
+              </div>
+              <div class="item-icon">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- where will the job be -->
+        <div class="where">
+          <p class="small-title container">Wo?</p>
+          <div class="list-items">
+            <div class="item-no-icon container">
+              <p>{{AdData.location}}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as same dates and continuous is not selected condition 1-->
+        <div class="same-dates" *ngIf="AdData.condition1">
+          <div class="when">
+            <p class="small-title container">Wann?</p>
+            <div class="list-items">
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" - "LAST DATE" zwischen "START TIME" - "END TIME" Uhr -->
+                <p>Am {{endStartDate}} zwischen {{AdData.startTime}} - {{AdData.endTime}} Uhr
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as same dates and continuous is selected condition 2-->
+        <div class="same-dates-continuous" *ngIf="AdData.condition2">
+          <div class="when">
+            <p class="small-title container">Wann?</p>
+            <div class="list-items">
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" um "START TIME" Uhr bis zum "LAST DATE" um "END TIME" Uhr -->
+                <p>Am {{endStartDate}} zwischen {{AdData.startTime}} - {{AdData.endTime}} Uhr
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as different dates and continuous is not selected condition 3-->
+        <div class="different-dates" *ngIf="AdData.condition3">
+          <div class="when">
+            <p class="small-title container">Wann?</p>
+            <div class="list-items">
+              <!-- Show for each date -->
+              <!-- <div class="item-no-icon container" *ngFor="let item of step2">
+                FORMAT: Am "FIRST DATE" zwischen "START TIME" - "END TIME" Uhr
+                <p *ngIf="item.qualification === (AdData?.matchingQualification?.qualification ? AdData?.matchingQualification?.qualification : AdData?.matchingQualification )">Am {{endStartDate}} zwischen {{item.startTime}} - {{item.endTime}} Uhr</p>
+              </div> -->
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" um "START TIME" Uhr bis zum "LAST DATE" um "END TIME" Uhr -->
+                <p>Am {{endStartDate}} zwischen {{AdData?.matchingQualification?.startTime}} - {{AdData?.matchingQualification?.endTime}} Uhr
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</ion-content>

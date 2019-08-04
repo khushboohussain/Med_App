@@ -1,0 +1,78 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <div class="title container">
+        <h2>Registrieren</h2>
+        <div class="text">
+          <p>Schnell & einfach registrieren und noch heute beginnen Aufträge anzunehmen oder in Auftrag zu geben.</p>
+        </div>
+      </div>
+
+      <div class="general">
+        <form [formGroup]="form">
+          <ion-list>
+            <!-- type of account -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Accountart</ion-label>
+              <ion-select [(ngModel)]="getType" cancelText="Abbrechen" okText="Fertig" formControlName="type" required>
+                <!-- employee -->
+                <ion-select-option value="employee">Einsatzkraft</ion-select-option>
+                <!-- employer -->
+                <ion-select-option value="employer">Organisation</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <!-- {{getType}} -->
+            <!-- name -->
+            <div class="grid-2">
+              <!-- first name -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Vorname</ion-label>
+                <ion-input type="text" clearInput autocapitalize="word" autocomplete autocorrect
+                  formControlName="vorname" required></ion-input>
+              </ion-item>
+
+              <!-- last name -->
+              <ion-item lines="none">
+                <ion-label position="stacked">Nachname</ion-label>
+                <ion-input type="text" clearInput autocapitalize="word" autocomplete autocorrect
+                  formControlName="nachname" required></ion-input>
+              </ion-item>
+            </div>
+
+            <!-- email -->
+            <ion-item lines="none">
+              <ion-label position="stacked">E-Mail</ion-label>
+              <ion-input type="email" clearInput formControlName="email" required></ion-input>
+            </ion-item>
+
+            <!-- password -->
+            <ion-item lines="none">
+              <ion-label position="stacked">Passwort</ion-label>
+              <ion-input type="password" clearInput formControlName="password" required></ion-input>
+            </ion-item>
+          </ion-list>
+
+          <div class="divider"></div>
+
+          <div class="container">
+            <p>Mit Ihrer Registrierung erklären Sie sich mit unserer AGB & Datenschutzerklärung einverstanden.</p>
+
+            <ion-button (click)="submitForm(form)" type="submit" [disabled]="form.invalid || form.pristine" color="primary" expand="block"> Jetzt registrieren </ion-button>
+
+            <!-- show if account type is set to "EMPLOYEE" -->
+            <!-- (click)="navigateEmployeeOnboarding()" -->
+            <!-- show if account type is set to "EMPLOYER" -->
+            <!-- <ion-button (click)="submitForm(form)" type="submit" [disabled]="form.invalid || form.pristine " color="primary" expand="block" >Jetzt registrieren</ion-button> -->
+            <!-- (click)="navigateEmployerOnboarding()" -->
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

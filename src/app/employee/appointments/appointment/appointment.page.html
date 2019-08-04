@@ -1,0 +1,83 @@
+<ion-content>
+  <div class="main">
+    <div class="header container">
+      <ion-back-button text="" defaultHref="" icon="arrow-round-back"></ion-back-button>
+    </div>
+
+    <div class="content">
+      <!-- ad title -->
+      <div class="title container">
+        <!-- <h2>Einsatzart </h2> -->
+        <h2> {{AdData.jobTitle}} </h2>
+      </div>
+
+      <div class="ad-info">
+        <!-- Where will the job be? -->
+        <div class="address">
+          <p class="small-title container">Wo?</p>
+          <div class="list-items">
+            <!-- address-->
+            <div class="item-no-icon container">
+              <p>{{AdData.location}}</p>
+            </div>
+            <!-- FORMAT: "PERSONAL QUALIFICATION" - "WAGE MONEY" / "If DAILY then Tag, if HOURLY then Stunde" -->
+            <div class="item-no-icon container">
+              <p>{{AdData.qualification}} - {{AdData.wage}} {{feeType}}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as same dates and continuous is not selected-->
+        <div class="same-dates" *ngIf="AdData.condition1">
+          <div class="when">
+            <p class="small-title container">Wann?</p>
+            <div class="list-items">
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" - "LAST DATE" zwischen "START TIME" - "END TIME" Uhr -->
+                <p>Am {{AdData.startDate}} - {{AdData.endDate}} zwischen {{AdData.startTime}} - {{AdData.endTime}} Uhr
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as same dates and continuous is selected-->
+        <div class="same-dates-continuous" *ngIf="AdData.condition2">
+          <div class="when">
+            <p class="small-title container">Wann?</p>
+            <div class="list-items">
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" um "START TIME" Uhr bis zum "LAST DATE" um "END TIME" Uhr -->
+                <p>Am {{AdData.startDate}} - {{AdData.endDate}} zwischen {{AdData.startTime}} - {{AdData.endTime}} Uhr
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- show if the ad is set as different dates and continuous is not selected-->
+        <div class="different-dates" *ngIf="AdData.condition3">
+          <div class="when">
+            <p class="small-title container">Wann?</p>
+            <div class="list-items">
+              <!-- Show for each date -->
+              <div class="item-no-icon container">
+                <!-- FORMAT: Am "FIRST DATE" zwischen "START TIME" - "END TIME" Uhr -->
+                <p>Am {{AdData.startDate}} - {{AdData.endDate}} zwischen {{AdData.startTime}} - {{AdData.endTime}} Uhr
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Cancel appointment -->
+        <div class="container">
+          <ion-button color="primary" expand="block" (click)="cancelAppointment()">Termin absagen</ion-button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

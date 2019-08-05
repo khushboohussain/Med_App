@@ -40,15 +40,13 @@ export class ApplicationPage implements OnInit {
 
     this.api.getEmployeeData(localStorage.getItem('appliedId')).subscribe(res => {
       this.userDetail = res;
-      console.log('employee Data ', res);
+      // console.log('employee Data ', res);
       if (this.userDetail.führerscheinklasse === 'NO') {
         this.licenseType = 'Kein Führerschein';
       } else if (this.userDetail.führerscheinklasse === 'BENEFICIAL') {
         this.licenseType = 'Führerschein wäre vorteilhaft';
-      } else if (this.userDetail.führerscheinklasse === 'B') {
-        this.licenseType = 'Kein Führerschein B';
       } else {
-        this.licenseType = 'Kein Führerschein BE';
+        this.licenseType = this.userDetail.führerscheinklasse;
       }
 
       this.otherQual = this.userDetail.qualification;

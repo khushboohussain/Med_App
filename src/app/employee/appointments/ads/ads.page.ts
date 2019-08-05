@@ -20,7 +20,6 @@ export class AdsPage implements OnInit {
   otherQualData = [];
   simpleQualData = [];
   adData = [];
-
   step2 = [];
 
   constructor(private navController: NavController, private api: ApiService, private helper: HelperService) { }
@@ -33,7 +32,7 @@ export class AdsPage implements OnInit {
     this.api.getPersonalQualification().subscribe((res: any) => {
       localStorage.removeItem('Qualifications');
       this.qualification = res.data;
-      // console.log('Own qualification', localStorage.getItem('qualifikation'));
+      console.log('Own qualification', localStorage.getItem('qualifikation'));
       this.qualification.forEach((a, i) => {
         if (a.toLowerCase() === localStorage.getItem('qualifikation').toLowerCase()) {
           x = this.qualification.slice(i, this.qualification.length);
@@ -46,8 +45,13 @@ export class AdsPage implements OnInit {
 
     this.api.getEmployeeData(localStorage.getItem('uid')).subscribe(res => {
       this.getEmployeedata = res;
+      console.log('employee data', res);
+
+      localStorage.setItem('drivingLicense', this.getEmployeedata.führerscheinklasse);
       if (this.getEmployeedata.status === true) {
-        this.getAllAds(x);
+        setTimeout(() => {
+          this.getAllAds(x);
+        }, 500);
       } else {
         this.helper.presentToast('your are not approved by Admin, Please wait...');
       }

@@ -144,7 +144,7 @@ export class HelperService {
           }
         } else {
           // tslint:disable-next-line: radix max-line-length
-          if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.step2[index].qualification) > -1 && this.step2[index].drivingLicence === this.getEmployeedata.führerscheinklasse) {
+          if (parseInt(this.getEmployeedata.Einsatzradius) >= distance && x.indexOf(result.step2[index].qualification) > -1 && this.step2[index].drivingLicence === this.getEmployeedata.führerscheinklasse) { 
             return { matchingQualification: { index, ...result.step2[index] }, ...result };
           }
         }

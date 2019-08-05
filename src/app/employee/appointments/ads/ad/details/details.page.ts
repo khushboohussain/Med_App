@@ -21,77 +21,78 @@ export class DetailsPage implements OnInit {
   step2: any = [];
   qualification;
   ApplyFor: string;
+  otherData: any = [];
+  visible: boolean;
 
   // tslint:disable-next-line: max-line-length
   constructor(public actionSheetController: ActionSheetController, private api: ApiService, private toastController: ToastController, private navController: NavController, private route: ActivatedRoute) { }
 
 
   ngOnInit() {
-
+    this.otherData = JSON.parse(localStorage.getItem('otherData'));
     this.route.params.subscribe(res => {
       if (res.type) {
         this.type = res.type;
       }
     });
+    // console.log('other data is ', this.otherData);
 
     this.getAds();
     this.GetEmployeeData();
-
   }
 
   getAds() {
     this.AdData = JSON.parse(localStorage.getItem('data'));
     // console.log('detail', this.AdData);
-    if (this.AdData.matchingQualification.qualification) {
-      console.log('if working');
-      this.qualification = this.AdData.matchingQualification.qualification;
-    } else {
-      console.log('else working');
-      this.qualification = this.AdData.qualification;
-
-    }
-
-    if (this.AdData.matchingQualification.wageType) {
-      if (this.AdData.matchingQualification.wageType === 'DAILY') {
-        this.feeType = 'Tag';
+    if (this.otherData !== null) {
+      this.visible = true;
+      this.qualification = this.otherData.qualification;
+      if (this.otherData.wageType) {
+        if (this.otherData.wageType === 'DAILY') {
+          this.feeType = 'Tag';
+        } else {
+          this.feeType = 'Stunde';
+        }
       } else {
-        this.feeType = 'Stunde';
+        if (this.AdData.wageType === 'DAILY') {
+          this.feeType = 'Tag';
+        } else {
+          this.feeType = 'Stunde';
+        }
       }
-    } else {
-      if (this.AdData.wageType === 'DAILY') {
-        this.feeType = 'Tag';
-      } else {
-        this.feeType = 'Stunde';
-      }
-    }
-
-    if (this.AdData.step2) {
-      if (this.step2.drivingLicence === 'B') {
+      if (this.otherData.drivingLicence === 'B') {
         this.license = 'B';
-      } else if (this.step2.drivingLicence === 'B1') {
-        this.license = 'B1';
-      } else if (this.step2.drivingLicence === 'NO') {
+      } else if (this.otherData.drivingLicence === 'BE') {
+        this.license = 'BE';
+      } else if (this.otherData.drivingLicence === 'NO') {
         this.license = 'Es wird kein Führerschein benötigt.';
       } else {
         this.license = 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
       }
-    } else { // if ad come from template 1 & 2
-      if (this.AdData.wageType === 'DAILY') {
-        this.feeType = 'Tag';
+    } else { // ‏matching data
+      this.visible = false;
+      if (this.AdData.matchingQualification.qualification) {
+        // console.log('if working');
+        this.qualification = this.AdData.matchingQualification.qualification;
       } else {
-        this.feeType = 'Stunde';
+        // console.log('else working');
+        this.qualification = this.AdData.qualification;
       }
-      if (this.AdData.drivingLicence === 'B') {
-        this.license = 'B';
-      } else if (this.AdData.drivingLicence === 'B1') {
-        this.license = 'B1';
-      } else if (this.AdData.drivingLicence === 'NO') {
-        this.license = 'Es wird kein Führerschein benötigt.';
+
+      if (this.AdData.matchingQualification.wageType) {
+        if (this.AdData.matchingQualification.wageType === 'DAILY') {
+          this.feeType = 'Tag';
+        } else {
+          this.feeType = 'Stunde';
+        }
       } else {
-        this.license = 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
+        if (this.AdData.wageType === 'DAILY') {
+          this.feeType = 'Tag';
+        } else {
+          this.feeType = 'Stunde';
+        }
       }
     }
-    // }
 
   } // end of ngOnInIt
 
@@ -172,14 +173,12 @@ export class DetailsPage implements OnInit {
   }
 
   getLisence(val) {
-    if (val === 'B') {
-      return 'B';
-    } else if (val === 'B1') {
-      return 'B1';
+    if (val === 'BENEFICIAL') {
+      return 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
     } else if (val === 'NO') {
       return 'Es wird kein Führerschein benötigt.';
     } else {
-      return 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
+      return val;
     }
   }
 }

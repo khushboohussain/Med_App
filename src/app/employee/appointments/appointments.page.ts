@@ -23,7 +23,7 @@ export class AppointmentsPage implements OnInit {
   }
 
   ngOnInit() {
-
+    localStorage.removeItem('Qualifications');
     this.getAdsData();
     this.getEmployeeData();
     this.data = {
@@ -62,7 +62,7 @@ export class AppointmentsPage implements OnInit {
           this.endStartDate[i] = this.getads[i].startDate;
         } else {
           this.endStartDate[i] = this.getads[i].startDate + ' - ' + this.getads[i].endDate;
-          console.log(this.endStartDate);
+          // console.log(this.endStartDate);
         }
       }
 

@@ -14,26 +14,33 @@
       <div class="ad-info">
         <div class="address">
           <p class="small-title container">Allgemeine Informationen</p>
-          <div class="list-items">
-            <!-- What kind of qualification -->
+          <div class="list-items" *ngIf="!visible">
             <div class="item-no-icon container">
-              <p>
-                {{qualification }}
-              </p>
+              <p> {{qualification }} </p>
             </div>
-            <!-- Wage, FORMAT: Honorar: "MONEY" / "If DAILY then Tag, if HOURLY then Stunde" -->
             <div class="item-no-icon container">
               <p>Honorar:
                 {{AdData?.matchingQualification?.wage ? AdData?.matchingQualification?.wage : AdData?.wage }}€/{{feeType}}
               </p>
             </div>
-            <!-- Is driving license necessary? 
-              If yes - FORMAT: Führerscheinklasse "DRIVING LICENSE TYPE", 
-              else if no - FORMAT: Es wird kein Führerschein benötigt, 
-              else if beneficial - FORMAT: Führerschein wäre vorteilhaft, kein Muss. -->
             <div class="item-no-icon container">
               <p>Führerscheinklasse:
                 {{ (AdData?.matchingQualification?.drivingLicence) ? (getLisence(AdData?.matchingQualification?.drivingLicence)) : (getLisence(AdData?.drivingLicence) ) }}
+              </p>
+            </div>
+          </div>
+          <div class="list-items" *ngIf="visible">
+            <div class="item-no-icon container">
+              <p> {{qualification }} </p>
+            </div>
+            <div class="item-no-icon container">
+              <p>Honorar:
+                {{ otherData?.wage }}€/{{feeType}}
+              </p>
+            </div>
+            <div class="item-no-icon container">
+              <p>Führerscheinklasse:
+                {{getLisence(otherData?.drivingLicence)}}
               </p>
             </div>
           </div>

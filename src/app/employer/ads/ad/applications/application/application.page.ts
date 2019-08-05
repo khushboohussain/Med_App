@@ -22,8 +22,7 @@ export class ApplicationPage implements OnInit {
   adData;
 
   // tslint:disable-next-line: max-line-length
-  constructor(public actionSheetController: ActionSheetController, private toastController: ToastController, private navController: NavController, public api: ApiService,
-    private ngzone: NgZone, private helper: HelperService, private route: ActivatedRoute) { }
+  constructor(public actionSheetController: ActionSheetController, private toastController: ToastController, private navController: NavController, public api: ApiService, private ngzone: NgZone, private helper: HelperService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     // console.log(localStorage);
@@ -41,6 +40,17 @@ export class ApplicationPage implements OnInit {
 
     this.api.getEmployeeData(localStorage.getItem('appliedId')).subscribe(res => {
       this.userDetail = res;
+      console.log('employee Data ', res);
+      if (this.userDetail.führerscheinklasse === 'NO') {
+        this.licenseType = 'Es wird kein Führerschein benötigt';
+      } else if (this.userDetail.führerscheinklasse === 'BENEFICIAL') {
+        this.licenseType = 'Führerschein wäre vorteilhaft';
+      } else if (this.userDetail.führerscheinklasse === 'B') {
+        this.licenseType = 'Führerschein B vorteilhaft';
+      } else {
+        this.licenseType = 'Führerschein BE vorteilhaft';
+      }
+
       this.otherQual = this.userDetail.qualification;
     }, err => {
       console.log('errors!', err.message);
@@ -63,7 +73,7 @@ export class ApplicationPage implements OnInit {
         let ad = JSON.parse(localStorage.getItem('adDetail'));
         this.api.getAd(ad.did)
           .subscribe((res: any) => {
-            console.log(localStorage.getItem('appliedId'));
+            // console.log(localStorage.getItem('appliedId'));
             let x = res.confirmEmployeeIds.findIndex(data => data.indexOf(localStorage.getItem('appliedId')) > -1);
             if (x > -1) {
               this.isConfirmApp = true;
@@ -73,17 +83,6 @@ export class ApplicationPage implements OnInit {
           });
       }
     });
-
-
-    if (this.userDetail.führerscheinklasse === 'NO') {
-      this.licenseType = 'Es wird kein Führerschein benötigt';
-    } else if (this.userDetail.führerscheinklasse === 'BENEFICIAL') {
-      this.licenseType = 'Führerschein wäre vorteilhaft';
-    } else if (this.userDetail.führerscheinklasse === 'B') {
-      this.licenseType = 'Führerschein B vorteilhaft';
-    } else {
-      this.licenseType = 'Führerschein B1 vorteilhaft';
-    }
 
     this.isConfirmApp = JSON.parse(localStorage.getItem('confirm'));
 

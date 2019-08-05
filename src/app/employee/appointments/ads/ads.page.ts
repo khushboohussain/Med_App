@@ -31,16 +31,16 @@ export class AdsPage implements OnInit {
 
     let x = [];
     this.api.getPersonalQualification().subscribe((res: any) => {
+      localStorage.removeItem('Qualifications');
       this.qualification = res.data;
-      // console.log('own qualification', localStorage.getItem('qualifikation'));
+      // console.log('Own qualification', localStorage.getItem('qualifikation'));
       this.qualification.forEach((a, i) => {
         if (a.toLowerCase() === localStorage.getItem('qualifikation').toLowerCase()) {
-          x = this.qualification.slice(i , this.qualification.length);
-          // console.log(x);
+          x = this.qualification.slice(i, this.qualification.length);
           return;
         }
       });
-      // console.log('Accordingly ', x);
+      localStorage.setItem('Qualifications', JSON.stringify(x));
     });
     // this.getAdsData()
 
@@ -48,18 +48,12 @@ export class AdsPage implements OnInit {
       this.getEmployeedata = res;
       if (this.getEmployeedata.status === true) {
         this.getAllAds(x);
+      } else {
+        this.helper.presentToast('your are not approved by Admin, Please wait...');
       }
     });
 
   }
-
-
-  navigateAd(item) {
-    // console.log(item);
-    localStorage.setItem('data', JSON.stringify(item));
-    this.navController.navigateForward('employee/appointments/ads/ad');
-  }
-
   getAllAds(x) {
     this.api.getAllAds().pipe(map((actions: any) =>
       actions.map(a => {
@@ -82,6 +76,13 @@ export class AdsPage implements OnInit {
     });
     // console.log('simpel QualData', this.simpleQualData);
 
+  }
+
+
+  navigateAd(item) {
+    // console.log(item);
+    localStorage.setItem('data', JSON.stringify(item));
+    this.navController.navigateForward('employee/appointments/ads/ad');
   }
 
 

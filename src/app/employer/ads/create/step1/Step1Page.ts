@@ -45,11 +45,11 @@ export class Step1Page implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       jobTitle: ['', Validators.required],
-      address: ['',],
+      address: ['', ],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      continoueWork: ['',],
-      fastReply: ['',]
+      continoueWork: ['', ],
+      fastReply: ['', ]
     });
 
 
@@ -60,12 +60,12 @@ export class Step1Page implements OnInit {
 
     if (this.data) {
       this.form.patchValue({
-        'jobTitle': this.data.jobTitle,
+        jobTitle: this.data.jobTitle,
         // 'address': this.data.address,
         // 'startDate': this.data.startDate,
         // 'endDate': this.data.endDate,
-        'continoueWork': this.data.continoueWork,
-        'fastReply': this.data.fastReply
+        continoueWork: this.data.continoueWork,
+        fastReply: this.data.fastReply
       });
       // this.location.addressAutocomplete = {
       //   query: this.data.address
@@ -82,7 +82,7 @@ export class Step1Page implements OnInit {
   addressItem(item) {
     this.disableaddress = true;
     this.location.addressAutocomplete.query = item;
-    this.form.controls['address'].setValue(item);
+    this.form.controls.address.setValue(item);
     // this.myLocation = item;
     // console.log('MY ITEM ', this.myLocation);
     this.location.addressChooseItem(item);
@@ -239,7 +239,7 @@ export class Step1Page implements OnInit {
             localStorage.setItem('days', JSON.stringify(DifferenceOfDate + 1));
             this.differDates = true;
             this.continuoueCheck = false;
-            this.form.controls['continoueWork'].setValue(false);
+            this.form.controls.continoueWork.setValue(false);
             this.form.get('continoueWork').enable();
             this.form.get('continoueWork').valueChanges.subscribe(res => {
               this.continuoueCheck = res;

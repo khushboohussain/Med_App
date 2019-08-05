@@ -105,7 +105,8 @@
               <!-- driving license -->
               <ion-item lines="none">
                 <ion-label position="stacked">Führerscheinklasse</ion-label>
-                <ion-select cancelText="Abbrechen" okText="Fertig" formControlName="führerscheinklasse">
+                <ion-select cancelText="Abbrechen" okText="Fertig"
+                  (ionChange)="drivingLincense(form)" formControlName="führerscheinklasse">
                   <ion-select-option value="NO">Kein Führerschein</ion-select-option>
                   <ion-select-option value="BENEFICIAL">Führerschein vorteilhaft</ion-select-option>
                   <ion-select-option value="B">B</ion-select-option>

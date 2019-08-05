@@ -28,7 +28,7 @@
               <ion-input type="file" (change)="uploadFile($event, 1)" style="visibility: hidden;"></ion-input> -->
             </ion-item>
 
-            <ion-item lines="none" [disabled]='makeDisable'>
+            <ion-item lines="none">
               <ion-button style="display: inline-grid; height: 50px; float: left;" (click)="openFile(2)">Choose a File
               </ion-button><span>{{getEmployeeData?.files[2].name}}</span>
               <ion-input type="file" (change)="uploadFile($event)" style="visibility: hidden;"></ion-input>
@@ -51,7 +51,7 @@
               <!-- <ion-input type="file" (change)="uploadFile($event, 2)" placeholder="Führerschein Vorderseite hochladen"></ion-input>
               <ion-input type="file" (change)="uploadFile($event, 3)" placeholder="Führerschein Rückseite hochladen"></ion-input> -->
             </ion-item>
-            <ion-item lines="none" [disabled]='makeDisable'>
+            <ion-item lines="none">
               <ion-button style="display: inline-grid; height: 50px; float: left;" (click)="openFile(4)">Choose a File
               </ion-button><span>{{getEmployeeData?.files[4].name}}</span>
               <ion-input type="file" (change)="uploadFile($event)" style="visibility: hidden;"></ion-input>
@@ -61,7 +61,7 @@
             </ion-item>
 
             <!-- other qualification -->
-            <ion-item lines="none" [disabled]='makeDisable'>
+            <ion-item lines="none">
               <ion-label position="stacked">Sonstige Qualifikation</ion-label>
 
               <!-- name of qualification -->

@@ -115,45 +115,40 @@ export class OnboardingPage implements OnInit {
       longitude: this.location.company.longitude
     };
 
-    if (this.data.führerscheinklasse !== 'NO') {
-      this.field.forEach(a => {
-        this.data.qualification.push(a.text);
-        if (a.file) {
-          this.fileArr.push(a.file);
-        }
-      });
+    // if (this.data.führerscheinklasse !== 'NO') {
+    this.field.forEach(a => {
+      this.data.qualification.push(a.text);
+      if (a.file) {
+        this.fileArr.push(a.file);
+      }
+    });
 
-      this.fileArr.forEach((a, i) => {
-        this.fileID = Math.floor(Date.now());
-        this.ref = this.fireStorage.ref('Files/' + this.fileID);
-        this.task = this.ref.put(a);
-        this.promises.push(this.task);
-        this.urls.push({ ref: this.ref, index: i, fileId: this.fileID, name: a.name });
-        localStorage.setItem('fID', this.fileID);
+    this.fileArr.forEach((a, i) => {
+      this.fileID = Math.floor(Date.now());
+      this.ref = this.fireStorage.ref('Files/' + this.fileID);
+      this.task = this.ref.put(a);
+      this.promises.push(this.task);
+      this.urls.push({ ref: this.ref, index: i, fileId: this.fileID, name: a.name });
+      localStorage.setItem('fID', this.fileID);
 
-        this.task.snapshotChanges().subscribe();
+      this.task.snapshotChanges().subscribe();
 
-      });
+    });
 
-      Promise.all(this.promises).then((url: Array<any>) => {
-        this.urls.forEach(a => {
-          a.ref.getDownloadURL().subscribe(res => {
-            this.data.files.push({
-              fileURL: res,
-              fileID: a.fileId,
-              name: a.name
-            });
+    Promise.all(this.promises).then((url: Array<any>) => {
+      this.urls.forEach(a => {
+        a.ref.getDownloadURL().subscribe(res => {
+          this.data.files.push({
+            fileURL: res,
+            fileID: a.fileId,
+            name: a.name
           });
         });
-        this.uploadImage();
-      }).catch((error) => {
-        console.log(`Some failed: `, error.message);
       });
-
-    } else {
       this.uploadImage();
-
-    }
+    }).catch((error) => {
+      console.log(`Some failed: `, error.message);
+    });
     this.helper.presentLoading();
     /*
         console.log(this.field);
@@ -230,5 +225,18 @@ export class OnboardingPage implements OnInit {
       text: '',
       file: ''
     });
+  }
+
+  drivingLincense(data) {
+    // console.log('DL is ', data);
+    // console.log('DL is ', data.value);
+    // console.log('DL is ', data.value.führerscheinklasse);
+    if (data.value.führerscheinklasse === 'NO') {
+      this.form.get('efg').disable();
+      this.form.get('ghi').disable();
+    } else {
+      this.form.get('efg').enable();
+      this.form.get('ghi').enable();
+    }
   }
 }

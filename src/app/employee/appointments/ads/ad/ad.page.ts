@@ -37,7 +37,7 @@ export class AdPage implements OnInit {
     let x = [];
     x = JSON.parse(localStorage.getItem('Qualifications'));
 
-    // x.shift();
+    x.shift();
     // console.log('new x is ', x);
 
     if (this.AdData.matchingQualification.qualification) {
@@ -77,7 +77,7 @@ export class AdPage implements OnInit {
             }
           }
         }
-        console.log('newd data 1', this.otherQualification);
+        // console.log('newd data 1', this.otherQualification);
       } else {
         if (x.indexOf(this.AdData.qualification) > -1) {
           if (this.qualification !== this.AdData.qualification) {

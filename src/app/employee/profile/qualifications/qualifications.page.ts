@@ -45,13 +45,13 @@ export class QualificationsPage implements OnInit {
     this.getEmployeeID = localStorage.getItem('uid');
     this.api.getEmployeeData(localStorage.getItem('uid')).subscribe(res => {
       this.getEmployeeData = res;
-      if (this.getEmployeeData.führerscheinklasse !== 'NO') {
-        this.makeDisable = false;
-      } else {
-        this.makeDisable = true;
-        this.form.get('qualifikation').disable();
-        this.form.get('führerscheinklasse').disable();
-      }
+      // if (this.getEmployeeData.führerscheinklasse !== 'NO') {
+      //   this.makeDisable = false;
+      // } else {
+      //   this.makeDisable = true;
+      //   this.form.get('qualifikation').disable();
+      //   this.form.get('führerscheinklasse').disable();
+      // }
       this.form.get('qualifikation').setValue(this.getEmployeeData.qualifikation);
       this.form.get('führerscheinklasse').setValue(this.getEmployeeData.führerscheinklasse);
       this.extras.slice(7);

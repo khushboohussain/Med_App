@@ -86,17 +86,17 @@ export class DetailsPage implements OnInit {
 
       this.form.get('email').disable();
       this.form.get('password').disable();
-      if (res.führerscheinklasse === 'NO') {
-        this.makeDisabled = true;
-        this.form.get('image').disable();
-        this.form.get('vorname').disable();
-        this.form.get('nachname').disable();
-        this.form.get('zugehörigkeit').disable();
-        this.form.get('telefonnumer').disable();
-        this.form.get('Einsatzradius').disable();
-        // this.form.get('image').disable();
-        this.form.get('adresse').disable();
-      }
+      // if (this.data.führerscheinklasse === 'NO') {
+      //   this.makeDisabled = true;
+      //   this.form.get('image').disable();
+      //   this.form.get('vorname').disable();
+      //   this.form.get('nachname').disable();
+      //   this.form.get('zugehörigkeit').disable();
+      //   this.form.get('telefonnumer').disable();
+      //   this.form.get('Einsatzradius').disable();
+      //   // this.form.get('image').disable();
+      //   this.form.get('adresse').disable();
+      // }
     });
 
     // this.form.patchValue({

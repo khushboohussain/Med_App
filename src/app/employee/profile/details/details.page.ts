@@ -24,7 +24,7 @@ export class DetailsPage implements OnInit {
   uploadImageId;
   data;
   file;
-
+  makeDisabled: boolean;
 
   disableaddress: boolean;
 
@@ -86,7 +86,19 @@ export class DetailsPage implements OnInit {
 
       this.form.get('email').disable();
       this.form.get('password').disable();
+      if (res.führerscheinklasse === 'NO') {
+        this.makeDisabled = true;
+        this.form.get('image').disable();
+        this.form.get('vorname').disable();
+        this.form.get('nachname').disable();
+        this.form.get('zugehörigkeit').disable();
+        this.form.get('telefonnumer').disable();
+        this.form.get('Einsatzradius').disable();
+        // this.form.get('image').disable();
+        this.form.get('adresse').disable();
+      }
     });
+
     // this.form.patchValue({
     //   vorname: this.data.vorname,
     //   nachname: this.data.nachname,
@@ -120,7 +132,7 @@ export class DetailsPage implements OnInit {
   addressItem(item) {
     this.disableaddress = true;
     this.location.addressAutocomplete.query = item;
-    this.form.controls['adresse'].setValue(item);
+    this.form.controls.adresse.setValue(item);
     // this.myLocation = item;
     // console.log('MY ITEM ', item);
 
@@ -175,7 +187,7 @@ export class DetailsPage implements OnInit {
           /.+;base64,(.+)/
         )[1];
         this.base64Image = base64String;
-        this.form.controls['image'].setValue(this.base64Image);
+        this.form.controls.image.setValue(this.base64Image);
       };
     } catch (e) {
       // no error

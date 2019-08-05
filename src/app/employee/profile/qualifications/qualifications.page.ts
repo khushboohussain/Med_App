@@ -30,7 +30,7 @@ export class QualificationsPage implements OnInit {
   extras = [];
   currentSelectedFile: number;
   adQualifications: string;
-
+  makeDisable: boolean;
   // tslint:disable-next-line: max-line-length
   constructor(public toastController: ToastController, private navController: NavController, private helper: HelperService, private fb: FormBuilder, private fireStorage: AngularFireStorage, private router: Router, private api: ApiService) { }
 
@@ -45,6 +45,13 @@ export class QualificationsPage implements OnInit {
     this.getEmployeeID = localStorage.getItem('uid');
     this.api.getEmployeeData(localStorage.getItem('uid')).subscribe(res => {
       this.getEmployeeData = res;
+      if (this.getEmployeeData.führerscheinklasse !== 'NO') {
+        this.makeDisable = false;
+      } else {
+        this.makeDisable = true;
+        this.form.get('qualifikation').disable();
+        this.form.get('führerscheinklasse').disable();
+      }
       this.form.get('qualifikation').setValue(this.getEmployeeData.qualifikation);
       this.form.get('führerscheinklasse').setValue(this.getEmployeeData.führerscheinklasse);
       this.extras.slice(7);
@@ -133,7 +140,7 @@ export class QualificationsPage implements OnInit {
           file: event.target.files[0],
           fileId: this.getEmployeeData.files[this.currentSelectedFile].fileID,
           name: event.target.files[0].name
-        })
+        });
       }
     }
   }

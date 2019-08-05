@@ -17,7 +17,8 @@
               <ion-label position="stacked">Profilbild</ion-label>
               <div class="profile-image container pointer">
                 <img src="{{image }} " (click)="choosePicture()" id="profileImage">
-                <input type="file" (change)="upload($event)" accept=".png,.jpg" style="visibility: hidden;">
+                <input type="file" (change)="upload($event)" accept=".png,.jpg" style="visibility: hidden;"
+                  formControlName="image">
               </div>
             </ion-item>
 
@@ -41,9 +42,9 @@
             <!-- address -->
             <ion-item lines="none">
               <ion-label position="stacked">Adresse</ion-label>
-              <ion-input type="text" clearInput autocapitalize="word" [(ngModel)]="location.addressAutocomplete.query"
-                [ngModelOptions]="{standalone: true}" (ionInput)="getLocations()" (ionBlur)="pickupBlur()"
-                (ionFocus)="pickupFocus()"></ion-input>
+              <ion-input [disabled]='makeDisabled' type="text" clearInput autocapitalize="word"
+                [(ngModel)]="location.addressAutocomplete.query" [ngModelOptions]="{standalone: true}"
+                (ionInput)="getLocations()" (ionBlur)="pickupBlur()" (ionFocus)="pickupFocus()"></ion-input>
             </ion-item>
 
             <ion-list
@@ -93,7 +94,8 @@
           <div class="divider"></div>
 
           <div class="container">
-            <ion-button color="primary" expand="block" [disabled]="!form.valid || form.pristine " (click)="submit(form)">Aktualisieren</ion-button>
+            <ion-button color="primary" expand="block" [disabled]="!form.valid || form.pristine "
+              (click)="submit(form)">Aktualisieren</ion-button>
           </div>
 
         </form>

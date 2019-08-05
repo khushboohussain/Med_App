@@ -60,15 +60,15 @@ export class DetailsPage implements OnInit {
           this.feeType = 'Stunde';
         }
       }
-      if (this.otherData.drivingLicence === 'B') {
-        this.license = 'B';
-      } else if (this.otherData.drivingLicence === 'BE') {
-        this.license = 'BE';
-      } else if (this.otherData.drivingLicence === 'NO') {
-        this.license = 'Es wird kein Führerschein benötigt.';
-      } else {
-        this.license = 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
-      }
+      // if (this.otherData.drivingLicence === 'B') {
+      //   this.license = 'B';
+      // } else if (this.otherData.drivingLicence === 'BE') {
+      //   this.license = 'BE';
+      // } else if (this.otherData.drivingLicence === 'NO') {
+      //   this.license = 'Es wird kein Führerschein benötigt.';
+      // } else {
+      //   this.license = 'Ein Führerschein ist vorteilhaft, aber nicht notwendig.';
+      // }
     } else { // ‏matching data
       this.visible = false;
       if (this.AdData.matchingQualification.qualification) {

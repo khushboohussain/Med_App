@@ -81,7 +81,7 @@ export class OnboardingPage implements OnInit {
   addressItem(item) {
     this.disableaddress = true;
     this.location.addressAutocomplete.query = item;
-    this.form.controls['adresse'].setValue(item);
+    this.form.controls.adresse.setValue(item);
     // console.log('MY ITEM ', item);
     this.location.addressChooseItem(item);
   }
@@ -114,35 +114,28 @@ export class OnboardingPage implements OnInit {
       latitude: this.location.company.latitude,
       longitude: this.location.company.longitude
     };
-    this.helper.presentLoading();
-    /*
-        console.log(this.field);
-        console.log(this.fileArr);
-     */
 
-    this.field.forEach(a => {
-      this.data.qualification.push(a.text);
-      if (a.file) {
-        this.fileArr.push(a.file);
-      }
-    });
+    if (this.data.führerscheinklasse !== 'NO') {
+      this.field.forEach(a => {
+        this.data.qualification.push(a.text);
+        if (a.file) {
+          this.fileArr.push(a.file);
+        }
+      });
 
-    this.fileArr.forEach((a, i) => {
-      this.fileID = Math.floor(Date.now());
-      this.ref = this.fireStorage.ref('Files/' + this.fileID);
-      this.task = this.ref.put(a);
-      this.promises.push(this.task);
-      this.urls.push({ ref: this.ref, index: i, fileId: this.fileID, name: a.name });
-      localStorage.setItem('fID', this.fileID);
+      this.fileArr.forEach((a, i) => {
+        this.fileID = Math.floor(Date.now());
+        this.ref = this.fireStorage.ref('Files/' + this.fileID);
+        this.task = this.ref.put(a);
+        this.promises.push(this.task);
+        this.urls.push({ ref: this.ref, index: i, fileId: this.fileID, name: a.name });
+        localStorage.setItem('fID', this.fileID);
 
-      this.task.snapshotChanges().subscribe();
+        this.task.snapshotChanges().subscribe();
 
-    });
+      });
 
-    Promise.all(
-      this.promises
-    )
-      .then((url: Array<any>) => {
+      Promise.all(this.promises).then((url: Array<any>) => {
         this.urls.forEach(a => {
           a.ref.getDownloadURL().subscribe(res => {
             this.data.files.push({
@@ -153,10 +146,21 @@ export class OnboardingPage implements OnInit {
           });
         });
         this.uploadImage();
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.log(`Some failed: `, error.message);
       });
+
+    } else {
+      this.uploadImage();
+
+    }
+    this.helper.presentLoading();
+    /*
+        console.log(this.field);
+        console.log(this.fileArr);
+     */
+
+
   }
 
   choosePicture() {
@@ -179,7 +183,7 @@ export class OnboardingPage implements OnInit {
           /.+;base64,(.+)/
         )[1];
         this.base64Image = base64String;
-        this.form.controls['image'].setValue(this.base64Image);
+        this.form.controls.image.setValue(this.base64Image);
       };
     } catch (e) {
       // no error
@@ -214,7 +218,6 @@ export class OnboardingPage implements OnInit {
   }
 
   createEmplyee() {
-
     this.api.updateEmployee(localStorage.getItem('uid'), this.data)
       .then(after => {
         this.helper.closeLoading();
